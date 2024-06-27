@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Profile - EE CTF') }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4 text-center">
+        <img src="{{ session['user']['photo_url'] }}" alt="Profile Picture" class="profile-picture-large mb-3">
+        <h2>{{ session['user']['first_name'] }} {{ session['user']['last_name'] }}</h2>
+        <p><i class="fas fa-envelope"></i> {{ session['user']['email'] }}</p>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3>{{ _('User Details') }}</h3>
+            </div>
+            <div class="card-body">
+                <p><strong>{{ _('ID') }}:</strong> {{ session['user']['id'] }}</p>
+                <p><strong>{{ _('First Name') }}:</strong> {{ session['user']['first_name'] }}</p>
+                <p><strong>{{ _('Last Name') }}:</strong> {{ session['user']['last_name'] }}</p>
+                <p><strong>{{ _('Email') }}:</strong> {{ session['user']['email'] }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

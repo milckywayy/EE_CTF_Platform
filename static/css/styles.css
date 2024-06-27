@@ -1,0 +1,141 @@
+body {
+    background-color: #1a1a1a;
+    font-family: 'Arial', sans-serif;
+    color: #d1d1e0;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand img.logo {
+    height: 60px;
+    margin-right: 10px;
+}
+
+.jumbotron {
+    background: linear-gradient(135deg, #2a2a72, #009ffd);
+    color: white;
+    padding: 2rem 1rem;
+    border-radius: 0.5rem;
+}
+
+.jumbotron .display-4 {
+    font-weight: bold;
+    color: #ffcc00;
+}
+
+.jumbotron .lead {
+    font-size: 1.25rem;
+    color: #d1d1e0;
+}
+
+.list-group-item {
+    background-color: #2a2a2a;
+    color: #d1d1e0;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+    border: none;
+}
+
+.list-group-item:hover {
+    background-color: #3d3d5c;
+}
+
+.badge-primary {
+    background-color: #009ffd;
+}
+
+.badge-warning {
+    background-color: #ffcc00;
+    color: black;
+}
+
+.badge-danger {
+    background-color: #ff4d4d;
+}
+
+.badge-success {
+    background-color: #66ff66;
+    color: black;
+}
+
+.mt-5 {
+    margin-top: 3rem !important;
+}
+
+.footer {
+    background-color: #1a1a1a;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.profile-picture-large {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.card {
+    background-color: #2a2a2a;
+    color: #d1d1e0;
+    border: none;
+}
+
+.card-header {
+    background-color: #1a1a1a;
+    border-bottom: 1px solid #3d3d5c;
+}
+
+.card-body p {
+    margin: 0.5rem 0;
+}
+
+.language-link {
+    color: #ffcc00;
+    text-decoration: none;
+    margin: 0 5px;
+    transition: color 0.3s ease;
+}
+
+.language-link:hover {
+    color: #009ffd;
+}
+
+.available-challenge a.challenge-link {
+    color: #d1d1e0;
+    text-decoration: none;
+}
+
+.available-challenge a.challenge-link:hover {
+    text-decoration: underline;
+}
+
+.unavailable-challenge .challenge-text {
+    color: #888;
+}

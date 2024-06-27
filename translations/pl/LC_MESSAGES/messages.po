@@ -1,0 +1,146 @@
+# Polish translations for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-06-27 18:24+0200\n"
+"PO-Revision-Date: 2024-06-27 17:21+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: pl\n"
+"Language-Team: pl <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && "
+"(n%100<10 || n%100>=20) ? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: app.py:47
+msgid "Please log in to access this page."
+msgstr "Zaloguj się, aby uzyskać dostęp do tej strony."
+
+#: app.py:112
+msgid "Error during USOS authentication. Please try again."
+msgstr "Błąd podczas uwierzytelniania USOS. Spróbuj ponownie."
+
+#: app.py:127
+msgid "You have been logged out."
+msgstr "Zostałeś wylogowany."
+
+#: templates/base.html:6
+msgid "EE CTF"
+msgstr "EE CTF"
+
+#: templates/base.html:31
+msgid "Logout"
+msgstr "Wyloguj się"
+
+#: templates/base.html:37
+msgid "Login"
+msgstr "Zaloguj się"
+
+#: templates/base.html:52
+msgid "2024 WRS EE"
+msgstr "2024 WRS EE"
+
+#: templates/index.html:3
+msgid "Home - EE CTF"
+msgstr "Strona główna - EE CTF"
+
+#: templates/index.html:7
+msgid "Welcome to the Electrical CTF Platform!"
+msgstr "Witamy na platformie Electrical CTF!"
+
+#: templates/index.html:8
+msgid "Enhance your cybersecurity skills with our CTF challenges."
+msgstr "Rozwijaj swoje umiejętności w zakresie cyberbezpieczeństwa dzięki naszym wyzwaniom CTF."
+
+#: templates/index.html:11
+msgid "Welcome back"
+msgstr "Witamy ponownie"
+
+#: templates/index.html:13
+msgid "Please log in to access our challenges."
+msgstr "Zaloguj się, aby uzyskać dostęp do naszych wyzwań."
+
+#: templates/index.html:19
+msgid "Available Challenges"
+msgstr "Dostępne wyzwania"
+
+#: templates/index.html:22 templates/index.html:26 templates/index.html:30
+#: templates/index.html:34 templates/index.html:38
+msgid "Challenge"
+msgstr "Wyzwanie"
+
+#: templates/index.html:22
+msgid "SQL Injection"
+msgstr "Wstrzyknięcie SQL"
+
+#: templates/index.html:23
+msgid "Easy"
+msgstr "Łatwe"
+
+#: templates/index.html:26
+msgid "XSS Attack"
+msgstr "Atak XSS"
+
+#: templates/index.html:27 templates/index.html:35
+msgid "Medium"
+msgstr "Średnie"
+
+#: templates/index.html:30
+msgid "Buffer Overflow"
+msgstr "Przepełnienie bufora"
+
+#: templates/index.html:31 templates/index.html:39
+msgid "Hard"
+msgstr "Trudne"
+
+#: templates/index.html:34
+msgid "Cryptography"
+msgstr "Kryptografia"
+
+#: templates/index.html:38
+msgid "Reverse Engineering"
+msgstr "Inżynieria wsteczna"
+
+#: templates/login.html:3
+msgid "Login - EE CTF"
+msgstr "Logowanie - EE CTF"
+
+#: templates/login.html:13
+msgid "Authenticate using your USOS account to access our platform."
+msgstr "Uwierzytelnij się za pomocą konta USOS, aby uzyskać dostęp do naszej platformy."
+
+#: templates/login.html:15
+msgid "Login with USOS"
+msgstr "Zaloguj się przez USOS"
+
+#: templates/profile.html:3
+msgid "Profile - EE CTF"
+msgstr "Profil - EE CTF"
+
+#: templates/profile.html:15
+msgid "User Details"
+msgstr "Szczegóły użytkownika"
+
+#: templates/profile.html:18
+msgid "ID"
+msgstr "ID"
+
+#: templates/profile.html:19
+msgid "First Name"
+msgstr "Imię"
+
+#: templates/profile.html:20
+msgid "Last Name"
+msgstr "Nazwisko"
+
+#: templates/profile.html:21
+msgid "Email"
+msgstr "Email"
+

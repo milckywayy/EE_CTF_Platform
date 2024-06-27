@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Login - EE CTF') }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header text-center">
+                <img src="{{ url_for('static', filename='images/usos_logo.svg') }}" alt="usos logo">
+            </div>
+            <div class="card-body text-center">
+                <p class="lead">{{ _('Authenticate using your USOS account to access our platform.') }}</p>
+                <a href="{{ url_for('usos_auth') }}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-sign-in-alt"></i> {{ _('Login with USOS') }}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

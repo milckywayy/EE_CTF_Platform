@@ -1,0 +1,144 @@
+# Translations template for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-06-27 18:24+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: app.py:47
+msgid "Please log in to access this page."
+msgstr ""
+
+#: app.py:112
+msgid "Error during USOS authentication. Please try again."
+msgstr ""
+
+#: app.py:127
+msgid "You have been logged out."
+msgstr ""
+
+#: templates/base.html:6
+msgid "EE CTF"
+msgstr ""
+
+#: templates/base.html:31
+msgid "Logout"
+msgstr ""
+
+#: templates/base.html:37
+msgid "Login"
+msgstr ""
+
+#: templates/base.html:52
+msgid "2024 WRS EE"
+msgstr ""
+
+#: templates/index.html:3
+msgid "Home - EE CTF"
+msgstr ""
+
+#: templates/index.html:7
+msgid "Welcome to the Electrical CTF Platform!"
+msgstr ""
+
+#: templates/index.html:8
+msgid "Enhance your cybersecurity skills with our CTF challenges."
+msgstr ""
+
+#: templates/index.html:11
+msgid "Welcome back"
+msgstr ""
+
+#: templates/index.html:13
+msgid "Please log in to access our challenges."
+msgstr ""
+
+#: templates/index.html:19
+msgid "Available Challenges"
+msgstr ""
+
+#: templates/index.html:22 templates/index.html:26 templates/index.html:30
+#: templates/index.html:34 templates/index.html:38
+msgid "Challenge"
+msgstr ""
+
+#: templates/index.html:22
+msgid "SQL Injection"
+msgstr ""
+
+#: templates/index.html:23
+msgid "Easy"
+msgstr ""
+
+#: templates/index.html:26
+msgid "XSS Attack"
+msgstr ""
+
+#: templates/index.html:27 templates/index.html:35
+msgid "Medium"
+msgstr ""
+
+#: templates/index.html:30
+msgid "Buffer Overflow"
+msgstr ""
+
+#: templates/index.html:31 templates/index.html:39
+msgid "Hard"
+msgstr ""
+
+#: templates/index.html:34
+msgid "Cryptography"
+msgstr ""
+
+#: templates/index.html:38
+msgid "Reverse Engineering"
+msgstr ""
+
+#: templates/login.html:3
+msgid "Login - EE CTF"
+msgstr ""
+
+#: templates/login.html:13
+msgid "Authenticate using your USOS account to access our platform."
+msgstr ""
+
+#: templates/login.html:15
+msgid "Login with USOS"
+msgstr ""
+
+#: templates/profile.html:3
+msgid "Profile - EE CTF"
+msgstr ""
+
+#: templates/profile.html:15
+msgid "User Details"
+msgstr ""
+
+#: templates/profile.html:18
+msgid "ID"
+msgstr ""
+
+#: templates/profile.html:19
+msgid "First Name"
+msgstr ""
+
+#: templates/profile.html:20
+msgid "Last Name"
+msgstr ""
+
+#: templates/profile.html:21
+msgid "Email"
+msgstr ""
+
