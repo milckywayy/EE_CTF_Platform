@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-27 18:24+0200\n"
+"POT-Creation-Date: 2024-06-28 15:24+0200\n"
 "PO-Revision-Date: 2024-06-27 17:21+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pl\n"
@@ -19,15 +19,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.15.0\n"
 
-#: app.py:47
+#: app.py:48
 msgid "Please log in to access this page."
 msgstr "Zaloguj się, aby uzyskać dostęp do tej strony."
 
-#: app.py:112
+#: app.py:114
 msgid "Error during USOS authentication. Please try again."
 msgstr "Błąd podczas uwierzytelniania USOS. Spróbuj ponownie."
 
-#: app.py:127
+#: app.py:129
 msgid "You have been logged out."
 msgstr "Zostałeś wylogowany."
 
@@ -57,7 +57,9 @@ msgstr "Witamy na platformie Electrical CTF!"
 
 #: templates/index.html:8
 msgid "Enhance your cybersecurity skills with our CTF challenges."
-msgstr "Rozwijaj swoje umiejętności w zakresie cyberbezpieczeństwa dzięki naszym wyzwaniom CTF."
+msgstr ""
+"Rozwijaj swoje umiejętności w zakresie cyberbezpieczeństwa dzięki naszym "
+"wyzwaniom CTF."
 
 #: templates/index.html:11
 msgid "Welcome back"
@@ -71,42 +73,13 @@ msgstr "Zaloguj się, aby uzyskać dostęp do naszych wyzwań."
 msgid "Available Challenges"
 msgstr "Dostępne wyzwania"
 
-#: templates/index.html:22 templates/index.html:26 templates/index.html:30
-#: templates/index.html:34 templates/index.html:38
+#: templates/index.html:25
 msgid "Challenge"
 msgstr "Wyzwanie"
 
-#: templates/index.html:22
-msgid "SQL Injection"
-msgstr "Wstrzyknięcie SQL"
-
-#: templates/index.html:23
-msgid "Easy"
-msgstr "Łatwe"
-
-#: templates/index.html:26
-msgid "XSS Attack"
-msgstr "Atak XSS"
-
-#: templates/index.html:27 templates/index.html:35
-msgid "Medium"
-msgstr "Średnie"
-
-#: templates/index.html:30
-msgid "Buffer Overflow"
-msgstr "Przepełnienie bufora"
-
-#: templates/index.html:31 templates/index.html:39
-msgid "Hard"
-msgstr "Trudne"
-
-#: templates/index.html:34
-msgid "Cryptography"
-msgstr "Kryptografia"
-
-#: templates/index.html:38
-msgid "Reverse Engineering"
-msgstr "Inżynieria wsteczna"
+#: templates/index.html:27
+msgid "Available from"
+msgstr "Dostępne od"
 
 #: templates/login.html:3
 msgid "Login - EE CTF"
@@ -114,7 +87,9 @@ msgstr "Logowanie - EE CTF"
 
 #: templates/login.html:13
 msgid "Authenticate using your USOS account to access our platform."
-msgstr "Uwierzytelnij się za pomocą konta USOS, aby uzyskać dostęp do naszej platformy."
+msgstr ""
+"Uwierzytelnij się za pomocą konta USOS, aby uzyskać dostęp do naszej "
+"platformy."
 
 #: templates/login.html:15
 msgid "Login with USOS"
@@ -143,4 +118,14 @@ msgstr "Nazwisko"
 #: templates/profile.html:21
 msgid "Email"
 msgstr "Email"
+
+msgid "Easy"
+msgstr "Łatwe"
+
+msgid "Medium"
+msgstr "Średnie"
+
+msgid "Hard"
+msgstr "Trudne"
+
 

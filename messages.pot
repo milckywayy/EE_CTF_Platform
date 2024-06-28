@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-27 18:24+0200\n"
+"POT-Creation-Date: 2024-06-28 15:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.15.0\n"
 
-#: app.py:47
+#: app.py:48
 msgid "Please log in to access this page."
 msgstr ""
 
-#: app.py:112
+#: app.py:114
 msgid "Error during USOS authentication. Please try again."
 msgstr ""
 
-#: app.py:127
+#: app.py:129
 msgid "You have been logged out."
 msgstr ""
 
@@ -69,41 +69,12 @@ msgstr ""
 msgid "Available Challenges"
 msgstr ""
 
-#: templates/index.html:22 templates/index.html:26 templates/index.html:30
-#: templates/index.html:34 templates/index.html:38
+#: templates/index.html:25
 msgid "Challenge"
 msgstr ""
 
-#: templates/index.html:22
-msgid "SQL Injection"
-msgstr ""
-
-#: templates/index.html:23
-msgid "Easy"
-msgstr ""
-
-#: templates/index.html:26
-msgid "XSS Attack"
-msgstr ""
-
-#: templates/index.html:27 templates/index.html:35
-msgid "Medium"
-msgstr ""
-
-#: templates/index.html:30
-msgid "Buffer Overflow"
-msgstr ""
-
-#: templates/index.html:31 templates/index.html:39
-msgid "Hard"
-msgstr ""
-
-#: templates/index.html:34
-msgid "Cryptography"
-msgstr ""
-
-#: templates/index.html:38
-msgid "Reverse Engineering"
+#: templates/index.html:27
+msgid "Available from"
 msgstr ""
 
 #: templates/login.html:3

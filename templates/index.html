@@ -18,26 +18,21 @@
     <div class="col-md-12">
         <h2>{{ _('Available Challenges') }}</h2>
         <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-center available-challenge">
-                <i class="fas fa-database"></i> <a href="{{ url_for('challenge', edition_id=1, challenge_id=1) }}" class="challenge-link">{{ _('Challenge') }} 1: {{ _('SQL Injection') }}</a>
-                <span class="badge badge-primary badge-pill">{{ _('Easy') }}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center unavailable-challenge">
-                <i class="fas fa-code"></i> <a href="{{ url_for('challenge', edition_id=1, challenge_id=2) }}" class="challenge-text">{{ _('Challenge') }} 2: {{ _('XSS Attack') }}</a>
-                <span class="badge badge-warning badge-pill">{{ _('Medium') }}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center unavailable-challenge">
-                <i class="fas fa-memory"></i> <a href="{{ url_for('challenge', edition_id=1, challenge_id=3) }}" class="challenge-text">{{ _('Challenge') }} 3: {{ _('Buffer Overflow') }}</a>
-                <span class="badge badge-danger badge-pill">{{ _('Hard') }}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center unavailable-challenge">
-                <i class="fas fa-lock"></i> <a href="{{ url_for('challenge', edition_id=1, challenge_id=4) }}" class="challenge-text">{{ _('Challenge') }} 4: {{ _('Cryptography') }}</a>
-                <span class="badge badge-success badge-pill">{{ _('Medium') }}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center unavailable-challenge">
-                <i class="fas fa-tools"></i> <a href="{{ url_for('challenge', edition_id=1, challenge_id=5) }}" class="challenge-text">{{ _('Challenge') }} 5: {{ _('Reverse Engineering') }}</a>
-                <span class="badge badge-danger badge-pill">{{ _('Hard') }}</span>
-            </li>
+            {% for challenge in challenges %}
+                <li class="list-group-item d-flex justify-content-between align-items-center {{ 'available-challenge' if challenge.is_available() else 'unavailable-challenge' }}">
+                    <i class="{{ challenge.icon }}"></i>
+                    {% if challenge.is_available() %}
+                        {% if get_locale() == 'en' %}
+                            <a href="{{ url_for('challenge', edition_id=challenge.edition_number, challenge_id=challenge.number) }}" class="challenge-link">{{ _('Challenge') }} {{ challenge.number }}: {{ challenge.name }}</a>
+                        {% else %}
+                            <a href="{{ url_for('challenge', edition_id=challenge.edition_number, challenge_id=challenge.number) }}" class="challenge-link">{{ _('Challenge') }} {{ challenge.number }}: {{ challenge.name_pl }}</a>
+                        {% endif %}
+                    {% else %}
+                        <span class="challenge-text">{{ _('Available from') + ' ' + challenge.start_date.strftime('%Y-%m-%d') }}</span>
+                    {% endif %}
+                    <span class="badge badge-pill {% if challenge.difficulty == 'Easy' %}badge-primary{% elif challenge.difficulty == 'Medium' %}badge-warning{% elif challenge.difficulty == 'Hard' %}badge-danger{% endif %}">{{ _(challenge.difficulty) }}</span>
+                </li>
+            {% endfor %}
         </ul>
     </div>
 </div>

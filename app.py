@@ -4,18 +4,19 @@ from flask import Flask, render_template, redirect, url_for, request, session, f
 from functools import wraps
 from flask_babel import Babel, gettext as _
 from usosapi.usosapi import USOSAPISession, USOSAPIAuthorizationError
-from model import db, User
+from model import db, User, Challenge
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('EE-CTF_SECRET_KEY', os.urandom(24))
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['BABEL_DEFAULT_LOCALE'] = 'pl'
 app.config['BABEL_SUPPORTED_LOCALES'] = ['en', 'pl']
 
 babel = Babel(app)
 db.init_app(app)
+
 with app.app_context():
     db.create_all()
 
@@ -58,7 +59,8 @@ def change_language(language):
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    challenges = Challenge.query.filter_by(edition_number=1).order_by(Challenge.number).all()
+    return render_template('index.html', challenges=challenges)
 
 
 @app.route('/profile')
@@ -131,11 +133,8 @@ def logout():
 @app.route('/challenge/<edition_id>/<challenge_id>')
 @login_required
 def challenge(edition_id, challenge_id):
-    if edition_id == 1:
-        if challenge_id == 1:
-            return render_template('index.html')
-
-    return render_template('index.html')
+    challenge = Challenge.query.filter_by(edition_number=edition_id, number=challenge_id).first_or_404()
+    return render_template('challenge.html', challenge=challenge)
 
 
 if __name__ == '__main__':

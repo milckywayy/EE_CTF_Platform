@@ -1,1 +1,1 @@
-from .user import db, User
+from .models import db, User, Challenge
