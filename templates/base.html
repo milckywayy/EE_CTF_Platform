@@ -9,48 +9,50 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{{ url_for('home') }}">
-            <img src="{{ url_for('static', filename='images/ee_ctf_logo_wide_white.svg') }}" alt="Logo" class="logo">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <div class="d-flex flex-column min-vh-100">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="{{ url_for('home') }}">
+                <img src="{{ url_for('static', filename='images/ee_ctf_logo_wide_white.svg') }}" alt="Logo" class="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                {% if 'logged_in' in session %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('profile') }}">
-                            <img src="{{ session['user']['photo_url'] }}" alt="Profile Picture" class="profile-picture">
-                            {{ session['user']['first_name'] }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('logout') }}">
-                            <i class="fas fa-sign-out-alt"></i> {{ _('Logout') }}
-                        </a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('login') }}">
-                            <i class="fas fa-sign-in-alt"></i> {{ _('Login') }}
-                        </a>
-                    </li>
-                {% endif %}
-            </ul>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    {% if 'logged_in' in session %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('profile') }}">
+                                <img src="{{ session['user']['photo_url'] }}" alt="Profile Picture" class="profile-picture">
+                                {{ session['user']['first_name'] }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('logout') }}">
+                                <i class="fas fa-sign-out-alt"></i> {{ _('Logout') }}
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('login') }}">
+                                <i class="fas fa-sign-in-alt"></i> {{ _('Login') }}
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container mt-5 mb-5 flex-grow-1">
+            {% block content %}{% endblock %}
         </div>
-    </nav>
 
-    <div class="container mt-5 mb-5">
-        {% block content %}{% endblock %}
+        <footer class="footer bg-dark text-white text-center py-3">
+            <a href="{{ url_for('change_language', language='pl') }}" class="language-link">Polski</a> |
+            <a href="{{ url_for('change_language', language='en') }}" class="language-link">English</a>
+            <p>&copy; {{ _('2024 WRS EE') }}</p>
+        </footer>
     </div>
-
-    <footer class="footer bg-dark text-white text-center py-3">
-        <a href="{{ url_for('change_language', language='pl') }}" class="language-link">Polski</a> |
-        <a href="{{ url_for('change_language', language='en') }}" class="language-link">English</a>
-        <p>&copy; {{ _('2024 WRS EE') }}</p>
-    </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

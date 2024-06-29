@@ -16,6 +16,7 @@ with app.app_context():
             description_pl="pl_Learn how to perform SQL Injection attacks.",
             start_date=datetime.now() - timedelta(days=1),  # dostępny od wczoraj
             difficulty="Easy",
+            flag="EE_CTF(3l3cTRic4l_Fl0g)",
             icon="fas fa-database"
         ),
         Challenge(
@@ -27,6 +28,7 @@ with app.app_context():
             description_pl="pl_Learn how to perform XSS attacks.",
             start_date=datetime.now() + timedelta(days=1),  # dostępny od jutra
             difficulty="Medium",
+            flag="EE_CTF(3l3cTRic4l_Fl0g)",
             icon="fas fa-code"
         ),
         Challenge(
@@ -38,6 +40,7 @@ with app.app_context():
             description_pl="pl_Learn how to perform Buffer Overflow attacks.",
             start_date=datetime.now() + timedelta(days=2),  # dostępny za dwa dni
             difficulty="Hard",
+            flag="EE_CTF(3l3cTRic4l_Fl0g)",
             icon="fas fa-memory"
         ),
         Challenge(
@@ -49,6 +52,7 @@ with app.app_context():
             description_pl="pl_Learn the basics of cryptography.",
             start_date=datetime.now() + timedelta(days=3),  # dostępny za trzy dni
             difficulty="Medium",
+            flag="EE_CTF(3l3cTRic4l_Fl0g)",
             icon="fas fa-lock"
         ),
         Challenge(
@@ -60,6 +64,7 @@ with app.app_context():
             description_pl="pl_Learn the basics of reverse engineering.",
             start_date=datetime.now() + timedelta(days=4),  # dostępny za cztery dni
             difficulty="Hard",
+            flag="EE_CTF(3l3cTRic4l_Fl0g)",
             icon="fas fa-tools"
         )
     ]

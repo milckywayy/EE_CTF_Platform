@@ -26,6 +26,7 @@ class Challenge(db.Model):
     description_pl = db.Column(db.Text, nullable=False)
     start_date = db.Column(db.DateTime, nullable=False)
     difficulty = db.Column(Enum('Easy', 'Medium', 'Hard', name='difficulty_levels'), nullable=False)
+    flag = db.Column(db.Text, nullable=False)
     icon = db.Column(db.String(50), nullable=False)
 
     def is_available(self):
