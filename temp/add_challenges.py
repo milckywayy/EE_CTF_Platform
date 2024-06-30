@@ -14,7 +14,7 @@ with app.app_context():
             name_pl="pl_SQL Injection",
             description="Learn how to perform SQL Injection attacks.",
             description_pl="pl_Learn how to perform SQL Injection attacks.",
-            start_date=datetime.now() - timedelta(days=1),  # dostępny od wczoraj
+            start_date=datetime.now() - timedelta(days=2),  # dostępny od przedwczoraj
             difficulty="Easy",
             flag="EE_CTF(fl4g)",
             icon="fas fa-database"
@@ -26,7 +26,7 @@ with app.app_context():
             name_pl="pl_XSS Attack",
             description="Learn how to perform XSS attacks.",
             description_pl="pl_Learn how to perform XSS attacks.",
-            start_date=datetime.now() + timedelta(days=1),  # dostępny od jutra
+            start_date=datetime.now() - timedelta(days=1),  # dostępny od wczoraj
             difficulty="Medium",
             flag="EE_CTF(fl4g)",
             icon="fas fa-code"

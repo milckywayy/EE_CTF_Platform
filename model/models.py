@@ -12,9 +12,6 @@ class User(db.Model):
     email = db.Column(db.String(120))
     photo_url = db.Column(db.String(200))
 
-    def __repr__(self):
-        return f'<User {self.first_name} {self.last_name}>'
-
 
 class Challenge(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -39,5 +36,10 @@ class Solve(db.Model):
     challenge_id = db.Column(db.Integer, db.ForeignKey(Challenge.id), nullable=False)
     solve_time = db.Column(db.DateTime, nullable=False)
 
-    def __repr__(self):
-        return f'User <{self.user_id} solved {self.challenge_id} at {self.solve_time}>'
+
+class Rating(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.String, db.ForeignKey(User.id), nullable=False)
+    challenge_id = db.Column(db.Integer, db.ForeignKey(Challenge.id), nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
+

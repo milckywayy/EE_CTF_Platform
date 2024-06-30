@@ -3,11 +3,11 @@ import os
 from datetime import datetime
 from functools import wraps
 
-from flask import Flask, render_template, redirect, url_for, request, session, flash
+from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify
 from flask_babel import Babel, gettext as _
 from usosapi.usosapi import USOSAPISession, USOSAPIAuthorizationError
 
-from model import db, User, Challenge, Solve
+from model import db, User, Challenge, Solve, Rating
 
 # Flask app initialization
 app = Flask(__name__)
@@ -145,17 +145,22 @@ def challenge(edition_number, challenge_number):
     lang = get_locale()
     challenge = Challenge.query.filter_by(edition_number=edition_number, number=challenge_number).first_or_404()
 
+    if not challenge.is_available():
+        flash(_("Challenge not available yet."), "danger")
+        return redirect(url_for('home'))
+
     ch_id = challenge.id
     ch_start = challenge.start_date
     ch_name = challenge.name_pl if lang == 'pl' else challenge.name
     ch_desc = challenge.description_pl if lang == 'pl' else challenge.description
 
-    top_solutions = (db.session.query(
+    top_solves = (db.session.query(
         User.first_name,
         User.last_name,
         Solve.solve_time
     )
-        .join(Solve, User.id == Solve.user_id)
+        .join(Solve, Solve.user_id == User.id)
+        .filter(Solve.challenge_id == ch_id)
         .order_by(Solve.solve_time.asc())
         .limit(10)
         .all())
@@ -170,15 +175,20 @@ def challenge(edition_number, challenge_number):
 
     top_solvers = [
         {'nick': f"{user_name} {user_last_name[0]}.", 'time': format_time_difference(ch_start, solve_time)}
-        for user_name, user_last_name, solve_time in top_solutions
+        for user_name, user_last_name, solve_time in top_solves
     ]
+
+    user_rating = Rating.query.filter_by(user_id=session['user']['id'], challenge_id=ch_id).first()
+    rating = 0
+    if user_rating is not None:
+        rating = user_rating.rating
 
     return render_template(
         'challenge.html',
         ch_id=ch_id,
         ch_name=ch_name,
         ch_desc=ch_desc,
-        user_rating=0,
+        user_rating=rating,
         user_comment='',
         top_solvers=top_solvers
     )
@@ -187,10 +197,11 @@ def challenge(edition_number, challenge_number):
 @app.route('/submit_flag/<challenge_id>', methods=['POST'])
 @login_required
 def submit_flag(challenge_id):
-    correct_challenge = Challenge.query.filter_by(id=challenge_id).first_or_404()
+    challenge = Challenge.query.filter_by(id=challenge_id).first_or_404()
+    print(challenge_id)
     if request.method == 'POST':
         user_flag = request.form.get('flag')
-        if user_flag == correct_challenge.flag:
+        if user_flag == challenge.flag:
             is_already_solved = Solve.query.filter_by(user_id=session['user']['id'], challenge_id=challenge_id).first()
             if is_already_solved is None:
                 solve = Solve(
@@ -207,6 +218,28 @@ def submit_flag(challenge_id):
     return redirect(request.referrer)
 
 
-# Run the app
+@app.route('/submit_rating<challenge_id>', methods=['POST'])
+@login_required
+def submit_rating(challenge_id):
+    data = request.get_json()
+    rating_value = data.get('rating')
+
+    if not challenge_id or not rating_value:
+        return jsonify({'error': 'Missing data'}), 400
+
+    user_id = session['user']['id']
+    rating = Rating.query.filter_by(user_id=user_id, challenge_id=challenge_id).first()
+
+    if rating:
+        rating.rating = rating_value
+    else:
+        new_rating = Rating(user_id=user_id, challenge_id=challenge_id, rating=rating_value)
+        db.session.add(new_rating)
+
+    db.session.commit()
+
+    return jsonify({'success': 'Rating saved'}), 200
+
+
 if __name__ == '__main__':
     app.run(debug=True)
