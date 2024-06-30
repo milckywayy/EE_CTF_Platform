@@ -1,14 +1,32 @@
 body {
-    background-color: #1a1a1a;
+    background-color: #0f0f0f;
     font-family: 'Arial', sans-serif;
-    color: #d1d1e0;
+    color: #e9e9ff;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
 }
 
+h1, h2, h3, h4, h5, h5 {
+    font-weight: bold;
+}
+
+/* Navbar */
 .navbar-brand {
     font-weight: bold;
     font-size: 1.5rem;
     display: flex;
     align-items: center;
+    color: #33ccff;
+    text-decoration: none;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #e9e9ff;
+}
+
+.bg-dark {
+    background-color: #0f0f0f !important;
 }
 
 .navbar-brand img.logo {
@@ -16,62 +34,77 @@ body {
     margin-right: 10px;
 }
 
+/* Jumbotron */
 .jumbotron {
-    background: linear-gradient(135deg, #2a2a72, #009ffd);
+    background: linear-gradient(135deg, #0d3a65, #2899c7);
     color: white;
     padding: 2rem 1rem;
     border-radius: 0.5rem;
+    text-align: center;
 }
 
-.jumbotron .display-4 {
+.jumbotron .display-5 {
     font-weight: bold;
-    color: #ffcc00;
+    color: #80e1ff;
 }
 
 .jumbotron .lead {
     font-size: 1.25rem;
-    color: #d1d1e0;
+    color: #d0ebff;
 }
 
+/* Challenge List */
 .challenge-list .list-group-item {
-    background-color: #2a2a2a;
+    background-color: #1a1a1a;
     color: #d1d1e0;
     font-size: 1.1rem;
     transition: background-color 0.3s ease;
     border: none;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    margin-bottom: 0.2rem;
 }
 
 .challenge-list .list-group-item:hover {
-    background-color: #3d3d5c;
+    background-color: #33334d;
 }
 
-.badge-primary {
-    background-color: #009ffd;
+/* Alerts */
+.alert-danger {
+    background-color: #ff4d4d !important;
+    color: white !important;
 }
 
-.badge-warning {
-    background-color: #ffcc00;
-    color: black;
+.alert-success {
+    background-color: #009ffd !important;
+    color: white !important;
 }
 
-.badge-danger {
-    background-color: #ff4d4d;
+.alert {
+    border-color: #0f0f0f;
+    border-bottom: white solid
 }
 
-.badge-success {
-    background-color: #66ff66;
-    color: black;
+.alert-messages {
+    font-size: 18px;
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 50%;
 }
 
-.mt-5 {
-    margin-top: 3rem !important;
-}
-
+/* Footer */
 .footer {
-    background-color: #1a1a1a;
+    background-color: #0f0f0f;
     width: 100%;
+    padding: 1rem 0;
+    text-align: center;
+    color: #d1d1e0;
 }
 
+/* Profile Pictures */
 .profile-picture {
     width: 40px;
     height: 40px;
@@ -88,9 +121,18 @@ body {
     object-fit: cover;
 }
 
+/* Navbar Links */
 .nav-link {
     display: flex;
     align-items: center;
+    color: #d1d1e0;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #33ccff;
 }
 
 .nav-item {
@@ -99,33 +141,38 @@ body {
     padding: 0 10px;
 }
 
+/* Cards */
 .card {
-    background-color: #2a2a2a;
+    background-color: #1a1a1a;
     color: #d1d1e0;
     border: none;
     border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    border-bottom: #33ccff solid;
 }
 
 .card-header {
-    background-color: #1a1a1a;
-    border-bottom: 1px solid #3d3d5c;
+    background-color: #0f0f0f;
+    padding: 0.75rem 1rem;
 }
 
 .card-body p {
     margin: 0.5rem 0;
 }
 
+/* Language Links */
 .language-link {
-    color: #ffcc00;
+    color: #33ccff;
     text-decoration: none;
     margin: 0 5px;
     transition: color 0.3s ease;
 }
 
 .language-link:hover {
-    color: #009ffd;
+    color: #1f6d7a;
 }
 
+/* Challenge Links */
 .available-challenge a.challenge-link {
     color: #d1d1e0;
     text-decoration: none;
@@ -139,11 +186,13 @@ body {
     color: #888;
 }
 
-/* Challenge */
+/* Form Controls */
 .form-control {
     background-color: #1a1a1a;
     color: #d1d1e0;
-    border: 1px solid #3d3d5c;
+    border: 1px solid #33334d;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
 }
 
 .form-control:read-write {
@@ -152,8 +201,7 @@ body {
 }
 
 .form-control:focus {
-    border-color: #009ffd;
-    box-shadow: 0 0 0 0.2rem rgba(0, 159, 253, 0.25);
+    border-color: #33ccff;
 }
 
 .comment-section .form-control:read-only {
@@ -170,17 +218,32 @@ body {
     resize: none;
 }
 
-.input-group .btn {
+/* Buttons */
+.btn.focus, .btn:focus {
+    box-shadow: none !important;
+}
+
+.btn-primary {
     background-color: #009ffd;
-    border-color: #009ffd;
     color: #fff;
+    transition: background-color 0.3s ease;
 }
 
-.input-group .btn:hover {
+.btn-primary:hover {
     background-color: #007bbf;
-    border-color: #007bbf;
 }
 
+.btn-secondary {
+    background-color: #33334d;
+    color: #d1d1e0;
+    transition: background-color 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #444466;
+}
+
+/* Ratings */
 .rating .stars {
     display: flex;
     justify-content: center;
@@ -196,27 +259,31 @@ body {
 }
 
 .rating .fa-star.filled {
-    color: #ffc700;
+    color: #33ccff;
 }
 
 .rating .fa-star:hover,
 .rating .fa-star:hover .fa-star {
-    color: #ffc700;
+    color: #33ccff;
 }
 
 .rating .fa-star.filled:hover ~ .fa-star {
     color: #ffffff;
 }
 
+/* Top Solvers */
 .top-solvers .list-group {
     list-style: decimal inside;
+    padding-left: 0;
 }
 
 .top-solvers .list-group-item {
     display: list-item;
-    background-color: #2a2a2a;
+    background-color: #1a1a1a;
     color: #d1d1e0;
-    border: 1px solid #3d3d5c;
+    border: 1px solid #33334d;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
 }
 
 .top-solvers .list-group-item .badge {
