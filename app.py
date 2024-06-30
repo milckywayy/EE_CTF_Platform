@@ -7,7 +7,7 @@ from flask import Flask, render_template, redirect, url_for, request, session, f
 from flask_babel import Babel, gettext as _
 from usosapi.usosapi import USOSAPISession, USOSAPIAuthorizationError
 
-from model import db, User, Challenge, Solve, Rating
+from model import db, User, Challenge, Solve, Rating, Comment
 
 # Flask app initialization
 app = Flask(__name__)
@@ -183,13 +183,18 @@ def challenge(edition_number, challenge_number):
     if user_rating is not None:
         rating = user_rating.rating
 
+    user_comment = Comment.query.filter_by(user_id=session['user']['id'], challenge_id=ch_id).first()
+    comment = None
+    if user_comment is not None:
+        comment = user_comment.comment
+
     return render_template(
         'challenge.html',
         ch_id=ch_id,
         ch_name=ch_name,
         ch_desc=ch_desc,
         user_rating=rating,
-        user_comment='',
+        user_comment=comment,
         top_solvers=top_solvers
     )
 
@@ -198,7 +203,7 @@ def challenge(edition_number, challenge_number):
 @login_required
 def submit_flag(challenge_id):
     challenge = Challenge.query.filter_by(id=challenge_id).first_or_404()
-    print(challenge_id)
+
     if request.method == 'POST':
         user_flag = request.form.get('flag')
         if user_flag == challenge.flag:
@@ -221,6 +226,8 @@ def submit_flag(challenge_id):
 @app.route('/submit_rating<challenge_id>', methods=['POST'])
 @login_required
 def submit_rating(challenge_id):
+    Challenge.query.filter_by(id=challenge_id).first_or_404()
+
     data = request.get_json()
     rating_value = data.get('rating')
 
@@ -239,6 +246,31 @@ def submit_rating(challenge_id):
     db.session.commit()
 
     return jsonify({'success': 'Rating saved'}), 200
+
+
+@app.route('/submit_comment/<challenge_id>', methods=['POST'])
+@login_required
+def submit_comment(challenge_id):
+    Challenge.query.filter_by(id=challenge_id).first_or_404()
+
+    if request.method == 'POST':
+        new_comment = request.form.get('comment')
+        user_id = session['user']['id']
+
+        saved_comment = Comment.query.filter_by(user_id=user_id, challenge_id=challenge_id).first()
+        if saved_comment is None:
+            comment = Comment(
+                user_id=session['user']['id'],
+                challenge_id=challenge_id,
+                comment=new_comment
+            )
+            db.session.add(comment)
+        else:
+            saved_comment.comment = new_comment
+
+        db.session.commit()
+
+    return redirect(request.referrer)
 
 
 if __name__ == '__main__':

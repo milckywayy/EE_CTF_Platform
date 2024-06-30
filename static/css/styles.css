@@ -146,9 +146,24 @@ body {
     border: 1px solid #3d3d5c;
 }
 
+.form-control:read-write {
+    background-color: #1a1a1a;
+    color: #d1d1e0;
+}
+
 .form-control:focus {
     border-color: #009ffd;
     box-shadow: 0 0 0 0.2rem rgba(0, 159, 253, 0.25);
+}
+
+.comment-section .form-control:read-only {
+    background-color: #1a1a1a;
+    border-color: #1a1a1a;
+    color: #7f7f88;
+}
+
+.comment-section .form-control:read-only:focus {
+    box-shadow: 0 0 0 0;
 }
 
 .comment-section .form-control {

@@ -43,3 +43,9 @@ class Rating(db.Model):
     challenge_id = db.Column(db.Integer, db.ForeignKey(Challenge.id), nullable=False)
     rating = db.Column(db.Integer, nullable=False)
 
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.String, db.ForeignKey(User.id), nullable=False)
+    challenge_id = db.Column(db.Integer, db.ForeignKey(Challenge.id), nullable=False)
+    comment = db.Column(db.Text, nullable=False)

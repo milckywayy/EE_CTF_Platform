@@ -64,11 +64,20 @@
             <div class="card-body">
                 <div class="comment-section">
                     <h4>{{ _('Share your thoughts about challenge') }}</h4>
-                    <form action="{{ 'xxx' }}" method="POST">
-                        <div class="form-group">
-                            <textarea class="form-control" name="comment" rows="3" required>{{ user_comment }}</textarea>
-                        </div>
-                        <button type="submit" class="btn btn-secondary">{{ _('Submit Comment') }}</button>
+                    <form action="{{ url_for('submit_comment', challenge_id=ch_id) }}" method="POST">
+                        {% if user_comment == None %}
+                            <div class="form-group">
+                                <textarea class="form-control" name="comment" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-secondary">{{ _('Submit Comment') }}</button>
+                        {% else %}
+                            <div class="form-group">
+                                <textarea class="form-control" name="comment" rows="3" readonly>{{ user_comment }}</textarea>
+                            </div>
+                            <button type="button" id="edit-comment" class="btn btn-secondary">{{ _('Edit Comment') }}</button>
+                            <button type="submit" id="save-comment" class="btn btn-primary" style="display: none;">{{ _('Save Comment') }}</button>
+                            <button type="button" id="cancel-edit" class="btn btn-secondary" style="display: none;">{{ _('Cancel') }}</button>
+                        {% endif %}
                     </form>
                 </div>
             </div>
@@ -77,7 +86,7 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
     let stars = document.querySelectorAll('.rating .fa-star');
     let ratingInput = document.getElementById('rating');
     let userRating = ratingInput.value;
@@ -131,6 +140,28 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
+
+    let editCommentBtn = document.getElementById('edit-comment');
+    let saveCommentBtn = document.getElementById('save-comment');
+    let cancelEditBtn = document.getElementById('cancel-edit');
+    let commentTextarea = document.querySelector('.comment-section textarea');
+
+    if (editCommentBtn) {
+        editCommentBtn.addEventListener('click', function () {
+            commentTextarea.removeAttribute('readonly');
+            editCommentBtn.style.display = 'none';
+            saveCommentBtn.style.display = 'inline-block';
+            cancelEditBtn.style.display = 'inline-block';
+        });
+
+        cancelEditBtn.addEventListener('click', function () {
+            commentTextarea.setAttribute('readonly', 'readonly');
+            commentTextarea.value = "{{ user_comment }}";
+            editCommentBtn.style.display = 'inline-block';
+            saveCommentBtn.style.display = 'none';
+            cancelEditBtn.style.display = 'none';
+        });
+    }
 });
 </script>
 

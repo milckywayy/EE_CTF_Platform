@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-28 15:24+0200\n"
+"POT-Creation-Date: 2024-06-30 16:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,32 +17,88 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.15.0\n"
 
-#: app.py:48
+#: app.py:57
 msgid "Please log in to access this page."
 msgstr ""
 
-#: app.py:114
+#: app.py:123
 msgid "Error during USOS authentication. Please try again."
 msgstr ""
 
-#: app.py:129
+#: app.py:138
 msgid "You have been logged out."
+msgstr ""
+
+#: app.py:149
+msgid "Challenge not available yet."
+msgstr ""
+
+#: app.py:220
+msgid "Correct flag! Well done!"
+msgstr ""
+
+#: app.py:222
+msgid "Incorrect flag. Try again!"
 msgstr ""
 
 #: templates/base.html:6
 msgid "EE CTF"
 msgstr ""
 
-#: templates/base.html:31
+#: templates/base.html:32
 msgid "Logout"
 msgstr ""
 
-#: templates/base.html:37
+#: templates/base.html:38
 msgid "Login"
 msgstr ""
 
-#: templates/base.html:52
+#: templates/base.html:68
 msgid "2024 WRS EE"
+msgstr ""
+
+#: templates/challenge.html:3
+msgid "Challenge - EE CTF"
+msgstr ""
+
+#: templates/challenge.html:15 templates/index.html:26 templates/index.html:28
+msgid "Challenge"
+msgstr ""
+
+#: templates/challenge.html:20
+msgid "EE_CTF{your_flag_here}"
+msgstr ""
+
+#: templates/challenge.html:22
+msgid "Submit Flag"
+msgstr ""
+
+#: templates/challenge.html:34
+msgid "Top 10 Solvers"
+msgstr ""
+
+#: templates/challenge.html:47
+msgid "Rate this Challenge"
+msgstr ""
+
+#: templates/challenge.html:66
+msgid "Share your thoughts about challenge"
+msgstr ""
+
+#: templates/challenge.html:72
+msgid "Submit Comment"
+msgstr ""
+
+#: templates/challenge.html:77
+msgid "Edit Comment"
+msgstr ""
+
+#: templates/challenge.html:78
+msgid "Save Comment"
+msgstr ""
+
+#: templates/challenge.html:79
+msgid "Cancel"
 msgstr ""
 
 #: templates/index.html:3
@@ -69,11 +125,7 @@ msgstr ""
 msgid "Available Challenges"
 msgstr ""
 
-#: templates/index.html:25
-msgid "Challenge"
-msgstr ""
-
-#: templates/index.html:27
+#: templates/index.html:31
 msgid "Available from"
 msgstr ""
 

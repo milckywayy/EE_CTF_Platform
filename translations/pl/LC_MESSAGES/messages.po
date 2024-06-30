@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-28 15:24+0200\n"
+"POT-Creation-Date: 2024-06-30 16:41+0200\n"
 "PO-Revision-Date: 2024-06-27 17:21+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pl\n"
@@ -19,33 +19,90 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.15.0\n"
 
-#: app.py:48
+#: app.py:57
 msgid "Please log in to access this page."
 msgstr "Zaloguj się, aby uzyskać dostęp do tej strony."
 
-#: app.py:114
+#: app.py:123
 msgid "Error during USOS authentication. Please try again."
 msgstr "Błąd podczas uwierzytelniania USOS. Spróbuj ponownie."
 
-#: app.py:129
+#: app.py:138
 msgid "You have been logged out."
 msgstr "Zostałeś wylogowany."
+
+#: app.py:149
+msgid "Challenge not available yet."
+msgstr "Wyzwanie nie jest jeszcze dostępne."
+
+#: app.py:220
+msgid "Correct flag! Well done!"
+msgstr "Prawidłowa flaga! Dobra robota!"
+
+#: app.py:222
+msgid "Incorrect flag. Try again!"
+msgstr "Nieprawidłowa flaga. Spróbu jeszcze raz!"
 
 #: templates/base.html:6
 msgid "EE CTF"
 msgstr "EE CTF"
 
-#: templates/base.html:31
+#: templates/base.html:32
 msgid "Logout"
 msgstr "Wyloguj się"
 
-#: templates/base.html:37
+#: templates/base.html:38
 msgid "Login"
 msgstr "Zaloguj się"
 
-#: templates/base.html:52
+#: templates/base.html:68
 msgid "2024 WRS EE"
 msgstr "2024 WRS EE"
+
+#: templates/challenge.html:3
+#, fuzzy
+msgid "Challenge - EE CTF"
+msgstr "Strona główna - EE CTF"
+
+#: templates/challenge.html:15 templates/index.html:26 templates/index.html:28
+msgid "Challenge"
+msgstr "Wyzwanie"
+
+#: templates/challenge.html:20
+msgid "EE_CTF{your_flag_here}"
+msgstr "EE_CTF{twoja_flaga}"
+
+#: templates/challenge.html:22
+msgid "Submit Flag"
+msgstr "Wyślij flagę"
+
+#: templates/challenge.html:34
+msgid "Top 10 Solvers"
+msgstr "Top 10 wyników"
+
+#: templates/challenge.html:47
+msgid "Rate this Challenge"
+msgstr "Oceń wyzwanie"
+
+#: templates/challenge.html:66
+msgid "Share your thoughts about challenge"
+msgstr "Podziel się opinią o wyzwaniu"
+
+#: templates/challenge.html:72
+msgid "Submit Comment"
+msgstr "Zapisz komentarz"
+
+#: templates/challenge.html:77
+msgid "Edit Comment"
+msgstr "Edytuj komentarz"
+
+#: templates/challenge.html:78
+msgid "Save Comment"
+msgstr "Zapisz komentarz"
+
+#: templates/challenge.html:79
+msgid "Cancel"
+msgstr "Anuluj"
 
 #: templates/index.html:3
 msgid "Home - EE CTF"
@@ -73,11 +130,7 @@ msgstr "Zaloguj się, aby uzyskać dostęp do naszych wyzwań."
 msgid "Available Challenges"
 msgstr "Dostępne wyzwania"
 
-#: templates/index.html:25
-msgid "Challenge"
-msgstr "Wyzwanie"
-
-#: templates/index.html:27
+#: templates/index.html:31
 msgid "Available from"
 msgstr "Dostępne od"
 
@@ -127,5 +180,4 @@ msgstr "Średnie"
 
 msgid "Hard"
 msgstr "Trudne"
-
 
