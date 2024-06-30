@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Challenge - EE CTF') }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h2 class="mb-4"> {{ ch_name }} </h2>
+    </div>
+
+    <div class="row justify-content-center d-flex">
+        <div class="col-md-8 d-flex flex-fill">
+            <div class="card mb-4 flex-fill">
+                <div class="card-body">
+                    <h4>{{ _('Challenge') }}</h4>
+                    <p class="lead">{{ ch_desc | safe }}</p>
+                    <hr class="my-4">
+                    <form action="{{ url_for('submit_flag', challenge_id=ch_id) }}" method="POST" class="mt-4">
+                        <div class="input-group">
+                            <input type="text" id="flagInput" name="flag" class="form-control" placeholder="{{ _('EE_CTF{your_flag_here}') }}" required>
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary">{{ _('Submit Flag') }}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 d-flex flex-fill">
+            <div class="card mb-4 flex-fill">
+                <div class="card-body">
+                    <div class="top-solvers">
+                        <h4>{{ _('Top 10 Solvers') }}</h4>
+                        <ol class="list-group list-group-numbered">
+                            {% for solver in top_solvers %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    {{ solver.nick }}
+                                    <span class="badge badge-primary badge-pill">{{ solver.time }}</span>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+
+                    <hr class="my-4">
+                    <div class="rating">
+                        <h4>{{ _('Rate this Challenge') }}</h4>
+                        <div class="stars">
+                            <span class="far fa-star" data-rating="1"></span>
+                            <span class="far fa-star" data-rating="2"></span>
+                            <span class="far fa-star" data-rating="3"></span>
+                            <span class="far fa-star" data-rating="4"></span>
+                            <span class="far fa-star" data-rating="5"></span>
+                        </div>
+                        <input type="hidden" name="rating" id="rating" value="{{ user_rating }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-13">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="comment-section">
+                    <h4>{{ _('Share your thoughts about challenge') }}</h4>
+                    <form action="{{ 'xxx' }}" method="POST">
+                        <div class="form-group">
+                            <textarea class="form-control" name="comment" rows="3" required>{{ user_comment }}</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-secondary">{{ _('Submit Comment') }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/challenge.js') }}"></script>
+{% endblock %}

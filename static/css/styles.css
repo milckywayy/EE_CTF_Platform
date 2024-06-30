@@ -33,7 +33,7 @@ body {
     color: #d1d1e0;
 }
 
-.list-group-item {
+.challenge-list .list-group-item {
     background-color: #2a2a2a;
     color: #d1d1e0;
     font-size: 1.1rem;
@@ -41,7 +41,7 @@ body {
     border: none;
 }
 
-.list-group-item:hover {
+.challenge-list .list-group-item:hover {
     background-color: #3d3d5c;
 }
 
@@ -103,6 +103,7 @@ body {
     background-color: #2a2a2a;
     color: #d1d1e0;
     border: none;
+    border-radius: 0.5rem;
 }
 
 .card-header {
@@ -136,4 +137,74 @@ body {
 
 .unavailable-challenge .challenge-text {
     color: #888;
+}
+
+/* Challenge */
+.form-control {
+    background-color: #1a1a1a;
+    color: #d1d1e0;
+    border: 1px solid #3d3d5c;
+}
+
+.form-control:focus {
+    border-color: #009ffd;
+    box-shadow: 0 0 0 0.2rem rgba(0, 159, 253, 0.25);
+}
+
+.comment-section .form-control {
+    resize: none;
+}
+
+.input-group .btn {
+    background-color: #009ffd;
+    border-color: #009ffd;
+    color: #fff;
+}
+
+.input-group .btn:hover {
+    background-color: #007bbf;
+    border-color: #007bbf;
+}
+
+.rating .stars {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.rating .fa-star {
+    font-size: 1.3rem;
+    color: #ffffff;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: color 0.3s ease;
+}
+
+.rating .fa-star.filled {
+    color: #ffc700;
+}
+
+.rating .fa-star:hover,
+.rating .fa-star:hover .fa-star {
+    color: #ffc700;
+}
+
+.rating .fa-star.filled:hover,
+.rating .fa-star.filled:hover ~ .fa-star {
+    color: #ffffff;
+}
+
+.top-solvers .list-group {
+    list-style: decimal inside;
+}
+
+.top-solvers .list-group-item {
+    display: list-item;
+    background-color: #2a2a2a;
+    color: #d1d1e0;
+    border: 1px solid #3d3d5c;
+}
+
+.top-solvers .list-group-item .badge {
+    background-color: #009ffd;
 }

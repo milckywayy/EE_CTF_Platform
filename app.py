@@ -130,11 +130,46 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route('/challenge/<edition_id>/<challenge_id>')
+@app.route('/challenge/<edition_number>/<challenge_number>')
 @login_required
-def challenge(edition_id, challenge_id):
-    challenge = Challenge.query.filter_by(edition_number=edition_id, number=challenge_id).first_or_404()
-    return render_template('challenge.html', challenge=challenge)
+def challenge(edition_number, challenge_number):
+    lang = get_locale()
+    challenge = Challenge.query.filter_by(edition_number=edition_number, number=challenge_number).first_or_404()
+
+    ch_id = challenge.id
+    ch_name = challenge.name if lang == 'en' else challenge.name_pl
+    ch_desc = challenge.description if lang == 'en' else challenge.description_pl
+
+    top_solvers = [
+        {"rank": 1, "nick": "User1", "time": "2m 30s"},
+        {"rank": 2, "nick": "User2", "time": "3m 15s"},
+        {"rank": 3, "nick": "User3", "time": "4m 20s"},
+        {"rank": 4, "nick": "User4", "time": "5m 05s"},
+        {"rank": 5, "nick": "User5", "time": "6m 10s"},
+    ]
+
+    return render_template(
+        'challenge.html',
+        ch_id=ch_id,
+        ch_name=ch_name,
+        ch_desc=ch_desc,
+        user_rating=0,
+        user_comment='ttesttt',
+        top_solvers=top_solvers
+    )
+
+
+@app.route('/submit_flag/<challenge_id>', methods=['POST'])
+@login_required
+def submit_flag(challenge_id):
+    correct_challenge = Challenge.query.filter_by(id=challenge_id).first_or_404()
+    if request.method == 'POST':
+        user_flag = request.form.get('flag')
+        if user_flag == correct_challenge.flag:
+            flash(_("Correct flag! Well done!"), "success")
+        else:
+            flash(_("Incorrect flag. Try again!"), "danger")
+    return redirect(request.referrer)
 
 
 if __name__ == '__main__':
