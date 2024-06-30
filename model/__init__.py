@@ -1,1 +1,1 @@
-from .models import db, User, Challenge
+from .models import db, User, Challenge, Solve

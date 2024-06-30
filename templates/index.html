@@ -22,10 +22,10 @@
                 <li class="challenge-list list-group-item d-flex justify-content-between align-items-center {{ 'available-challenge' if challenge.is_available() else 'unavailable-challenge' }}">
                     <i class="{{ challenge.icon }}"></i>
                     {% if challenge.is_available() %}
-                        {% if get_locale() == 'en' %}
-                            <a href="{{ url_for('challenge', edition_number=challenge.edition_number, challenge_number=challenge.number) }}" class="challenge-link">{{ _('Challenge') }} {{ challenge.number }}: {{ challenge.name }}</a>
-                        {% else %}
+                        {% if get_locale() == 'pl' %}
                             <a href="{{ url_for('challenge', edition_number=challenge.edition_number, challenge_number=challenge.number) }}" class="challenge-link">{{ _('Challenge') }} {{ challenge.number }}: {{ challenge.name_pl }}</a>
+                        {% else %}
+                            <a href="{{ url_for('challenge', edition_number=challenge.edition_number, challenge_number=challenge.number) }}" class="challenge-link">{{ _('Challenge') }} {{ challenge.number }}: {{ challenge.name }}</a>
                         {% endif %}
                     {% else %}
                         <span class="challenge-text">{{ _('Available from') + ' ' + challenge.start_date.strftime('%Y-%m-%d') }}</span>

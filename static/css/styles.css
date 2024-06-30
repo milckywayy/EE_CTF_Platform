@@ -189,7 +189,6 @@ body {
     color: #ffc700;
 }
 
-.rating .fa-star.filled:hover,
 .rating .fa-star.filled:hover ~ .fa-star {
     color: #ffffff;
 }

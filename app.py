@@ -1,28 +1,37 @@
 import json
 import os
-from flask import Flask, render_template, redirect, url_for, request, session, flash
+from datetime import datetime
 from functools import wraps
+
+from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_babel import Babel, gettext as _
 from usosapi.usosapi import USOSAPISession, USOSAPIAuthorizationError
-from model import db, User, Challenge
 
+from model import db, User, Challenge, Solve
+
+# Flask app initialization
 app = Flask(__name__)
 app.secret_key = os.environ.get('EE-CTF_SECRET_KEY', os.urandom(24))
 
+# Configurations
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['BABEL_DEFAULT_LOCALE'] = 'pl'
 app.config['BABEL_SUPPORTED_LOCALES'] = ['en', 'pl']
 
+# Initialize Babel and database
 babel = Babel(app)
 db.init_app(app)
 
+# Create database tables
 with app.app_context():
     db.create_all()
 
+# Load USOS API credentials
 with open('credentials/usos_api_credentials.json', 'r') as file:
     usosapi_credentials = json.load(file)
 
+# Initialize USOS API session
 usosapi = USOSAPISession(
     usosapi_credentials['api_base_address'],
     usosapi_credentials['consumer_key'],
@@ -110,7 +119,7 @@ def login():
 
             return redirect(url_for('home'))
 
-        except USOSAPIAuthorizationError as e:
+        except USOSAPIAuthorizationError:
             flash(_("Error during USOS authentication. Please try again."), "danger")
 
     return render_template('login.html')
@@ -137,15 +146,31 @@ def challenge(edition_number, challenge_number):
     challenge = Challenge.query.filter_by(edition_number=edition_number, number=challenge_number).first_or_404()
 
     ch_id = challenge.id
-    ch_name = challenge.name if lang == 'en' else challenge.name_pl
-    ch_desc = challenge.description if lang == 'en' else challenge.description_pl
+    ch_start = challenge.start_date
+    ch_name = challenge.name_pl if lang == 'pl' else challenge.name
+    ch_desc = challenge.description_pl if lang == 'pl' else challenge.description
+
+    top_solutions = (db.session.query(
+        User.first_name,
+        User.last_name,
+        Solve.solve_time
+    )
+        .join(Solve, User.id == Solve.user_id)
+        .order_by(Solve.solve_time.asc())
+        .limit(10)
+        .all())
+
+    def format_time_difference(start_time, end_time):
+        delta = end_time - start_time
+        days = delta.days
+        seconds = delta.seconds
+        hours, remainder = divmod(seconds, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        return f"{days}d {hours}h {minutes}m {seconds}s"
 
     top_solvers = [
-        {"rank": 1, "nick": "User1", "time": "2m 30s"},
-        {"rank": 2, "nick": "User2", "time": "3m 15s"},
-        {"rank": 3, "nick": "User3", "time": "4m 20s"},
-        {"rank": 4, "nick": "User4", "time": "5m 05s"},
-        {"rank": 5, "nick": "User5", "time": "6m 10s"},
+        {'nick': f"{user_name} {user_last_name[0]}.", 'time': format_time_difference(ch_start, solve_time)}
+        for user_name, user_last_name, solve_time in top_solutions
     ]
 
     return render_template(
@@ -154,7 +179,7 @@ def challenge(edition_number, challenge_number):
         ch_name=ch_name,
         ch_desc=ch_desc,
         user_rating=0,
-        user_comment='ttesttt',
+        user_comment='',
         top_solvers=top_solvers
     )
 
@@ -166,11 +191,22 @@ def submit_flag(challenge_id):
     if request.method == 'POST':
         user_flag = request.form.get('flag')
         if user_flag == correct_challenge.flag:
+            is_already_solved = Solve.query.filter_by(user_id=session['user']['id'], challenge_id=challenge_id).first()
+            if is_already_solved is None:
+                solve = Solve(
+                    user_id=session['user']['id'],
+                    challenge_id=challenge_id,
+                    solve_time=datetime.now()
+                )
+                db.session.add(solve)
+                db.session.commit()
+
             flash(_("Correct flag! Well done!"), "success")
         else:
             flash(_("Incorrect flag. Try again!"), "danger")
     return redirect(request.referrer)
 
 
+# Run the app
 if __name__ == '__main__':
     app.run(debug=True)
