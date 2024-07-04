@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 from functools import wraps
 
+import requests
 from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify
 from flask_babel import Babel, gettext as _
 from usosapi.usosapi import USOSAPISession, USOSAPIAuthorizationError
@@ -38,6 +39,9 @@ usosapi = USOSAPISession(
     usosapi_credentials['consumer_secret'],
     'email'
 )
+
+VM_MANAGER_API = 'http://127.0.0.1:8080'
+# VM_MANAGER_API = 'http://172.22.92.248:8080'
 
 
 @babel.localeselector
@@ -90,31 +94,25 @@ def login():
                 fields='id|first_name|last_name|email|photo_urls[200x200]'
             )
 
-            usos_id = user_data['id']
-            first_name = user_data['first_name']
-            last_name = user_data['last_name']
-            email = user_data['email']
-            photo_url = user_data['photo_urls']['200x200']
-
-            user = User.query.filter_by(id=usos_id).first()
+            user = User.query.filter_by(id=user_data['id']).first()
             if user is None:
                 user = User(
-                    id=usos_id,
-                    first_name=first_name,
-                    last_name=last_name,
-                    email=email,
-                    photo_url=photo_url
+                    id=user_data['id'],
+                    first_name=user_data['first_name'],
+                    last_name=user_data['last_name'],
+                    email=user_data['email'],
+                    photo_url=user_data['photo_urls']['200x200']
                 )
                 db.session.add(user)
                 db.session.commit()
 
             session['logged_in'] = True
             session['user'] = {
-                'id': usos_id,
-                'first_name': first_name,
-                'last_name': last_name,
-                'email': email,
-                'photo_url': photo_url
+                'id': user_data['id'],
+                'first_name': user_data['first_name'],
+                'last_name': user_data['last_name'],
+                'email': user_data['email'],
+                'photo_url': user_data['photo_urls']['200x200']
             }
 
             return redirect(url_for('home'))
@@ -179,14 +177,10 @@ def challenge(edition_number, challenge_number):
     ]
 
     user_rating = Rating.query.filter_by(user_id=session['user']['id'], challenge_id=ch_id).first()
-    rating = 0
-    if user_rating is not None:
-        rating = user_rating.rating
+    rating = user_rating.rating if user_rating else 0
 
     user_comment = Comment.query.filter_by(user_id=session['user']['id'], challenge_id=ch_id).first()
-    comment = None
-    if user_comment is not None:
-        comment = user_comment.comment
+    comment = user_comment.comment if user_comment else None
 
     return render_template(
         'challenge.html',
@@ -204,26 +198,25 @@ def challenge(edition_number, challenge_number):
 def submit_flag(challenge_id):
     challenge = Challenge.query.filter_by(id=challenge_id).first_or_404()
 
-    if request.method == 'POST':
-        user_flag = request.form.get('flag')
-        if user_flag == challenge.flag:
-            is_already_solved = Solve.query.filter_by(user_id=session['user']['id'], challenge_id=challenge_id).first()
-            if is_already_solved is None:
-                solve = Solve(
-                    user_id=session['user']['id'],
-                    challenge_id=challenge_id,
-                    solve_time=datetime.now()
-                )
-                db.session.add(solve)
-                db.session.commit()
+    user_flag = request.form.get('flag')
+    if user_flag == challenge.flag:
+        is_already_solved = Solve.query.filter_by(user_id=session['user']['id'], challenge_id=challenge_id).first()
+        if is_already_solved is None:
+            solve = Solve(
+                user_id=session['user']['id'],
+                challenge_id=challenge_id,
+                solve_time=datetime.now()
+            )
+            db.session.add(solve)
+            db.session.commit()
 
-            flash(_("Correct flag! Well done!"), "success")
-        else:
-            flash(_("Incorrect flag. Try again!"), "danger")
+        flash(_("Correct flag! Well done!"), "success")
+    else:
+        flash(_("Incorrect flag. Try again!"), "danger")
     return redirect(request.referrer)
 
 
-@app.route('/submit_rating<challenge_id>', methods=['POST'])
+@app.route('/submit_rating/<challenge_id>', methods=['POST'])
 @login_required
 def submit_rating(challenge_id):
     Challenge.query.filter_by(id=challenge_id).first_or_404()
@@ -231,7 +224,7 @@ def submit_rating(challenge_id):
     data = request.get_json()
     rating_value = data.get('rating')
 
-    if not challenge_id or not rating_value:
+    if not rating_value:
         return jsonify({'error': 'Missing data'}), 400
 
     user_id = session['user']['id']
@@ -253,24 +246,70 @@ def submit_rating(challenge_id):
 def submit_comment(challenge_id):
     Challenge.query.filter_by(id=challenge_id).first_or_404()
 
-    if request.method == 'POST':
-        new_comment = request.form.get('comment')
-        user_id = session['user']['id']
+    new_comment = request.form.get('comment')
+    user_id = session['user']['id']
 
-        saved_comment = Comment.query.filter_by(user_id=user_id, challenge_id=challenge_id).first()
-        if saved_comment is None:
-            comment = Comment(
-                user_id=session['user']['id'],
-                challenge_id=challenge_id,
-                comment=new_comment
-            )
-            db.session.add(comment)
-        else:
-            saved_comment.comment = new_comment
+    saved_comment = Comment.query.filter_by(user_id=user_id, challenge_id=challenge_id).first()
+    if saved_comment is None:
+        comment = Comment(
+            user_id=user_id,
+            challenge_id=challenge_id,
+            comment=new_comment
+        )
+        db.session.add(comment)
+    else:
+        saved_comment.comment = new_comment
 
-        db.session.commit()
+    db.session.commit()
 
     return redirect(request.referrer)
+
+
+@app.route('/vm_manager/manager/<image>')
+@login_required
+def vm_manager(image):
+    session_id = session['user']['id']
+    return render_template('vm_manager.html', session_id=session_id, image=image)
+
+
+@app.route('/vm_manager/vm_status')
+@login_required
+def api_vm_status():
+    session_id = session['user']['id']
+    response = requests.post(f'{VM_MANAGER_API}/vm_status', json={'session_id': session_id})
+    return jsonify(response.json())
+
+
+@app.route('/vm_manager/make_vm/<image>')
+@login_required
+def api_make_vm(image):
+    session_id = session['user']['id']
+    response = requests.post(f'{VM_MANAGER_API}/make_vm/{image}', json={'session_id': session_id})
+    return jsonify(response.json())
+
+
+@app.route('/vm_manager/remove_vm')
+@login_required
+def api_remove_vm():
+    session_id = session['user']['id']
+    response = requests.delete(f'{VM_MANAGER_API}/remove_vm', json={'session_id': session_id})
+    return jsonify(response.json())
+
+
+@app.route('/vm_manager/extend_vm')
+@login_required
+def api_extend_vm():
+    session_id = session['user']['id']
+    response = requests.post(f'{VM_MANAGER_API}/extend_vm', json={'session_id': session_id})
+    return jsonify(response.json())
+
+
+@app.route('/vm_manager/restart_vm')
+@login_required
+def api_restart_vm():
+    session_id = session['user']['id']
+    response = requests.post(f'{VM_MANAGER_API}/restart_vm', json={'session_id': session_id})
+    return jsonify(response.json())
 
 
 if __name__ == '__main__':

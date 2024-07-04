@@ -289,3 +289,10 @@ h1, h2, h3, h4, h5, h5 {
 .top-solvers .list-group-item .badge {
     background-color: #009ffd;
 }
+
+.container_widget {
+    width: 100%;
+    height: 250px;
+    border-radius: 0.5rem;
+    border: 0;
+}

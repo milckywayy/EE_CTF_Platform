@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VM Management</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .status-dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .status-text {
+            margin-right: 20px;
+        }
+        .running {
+            background-color: green;
+        }
+        .stopped {
+            background-color: red;
+        }
+        .loading, .not_created {
+            background-color: yellow;
+        }
+        #sshText {
+            word-break: break-all;
+        }
+        .ssh-command {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .border {
+            border: 1px solid #dee2e6 !important;
+        }
+        .rounded {
+            border-radius: 5px !important;
+        }
+        .badge-pill {
+            margin: 0 5px 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid p-3">
+        <div class="mb-3"><b>VM manager - {{ image }}</b></div>
+
+        <div class="status-indicator mb-2">
+            <div id="statusDot" class="status-dot"></div>
+            <div id="statusText" class="status-text">Status: Loading</div>
+            <div id="vmInfo"></div>
+        </div>
+
+        <div class="mb-3" role="group" aria-label="VM Actions">
+            <button class="btn btn-primary" id="createBtn" onclick="makeVM()">Create VM</button>
+            <button class="btn btn-danger" id="removeBtn" onclick="removeVM()">Delete VM</button>
+            <button class="btn btn-warning" id="extendBtn" onclick="extendVM()">Extend time</button>
+            <button class="btn btn-secondary" id="restartBtn" onclick="restartVM()">Restart VM</button>
+        </div>
+
+        <div class="ssh-command p-2 bg-transparent border rounded">
+            <span id="sshText"></span>
+            <button id="copy-button" class="btn btn-sm btn-light" onclick="copySSH()"><i class="far fa-copy"></i></button>
+        </div>
+    </div>
+
+    <script>
+        let expirationTimestamp;
+
+        async function fetchWithLoading(url, options) {
+            setStatus('loading', 'Loading');
+            hideVmInfo()
+            try {
+                const response = await fetch(url, options);
+                const result = await response.json();
+                if (!response.ok) {
+                    alert(result.error)
+                    return null;
+                }
+                if (result.error) {
+                    alert(result.error)
+                }
+                return result;
+            } catch (error) {
+                alert(error.message)
+                return null;
+            }
+        }
+
+        async function vmStatus() {
+            const result = await fetchWithLoading(`/vm_manager/vm_status`);
+
+            if (result) {
+                updateUI(result);
+            }
+        }
+
+        async function makeVM() {
+            await fetchWithLoading(`/vm_manager/make_vm/{{ image }}`);
+            await vmStatus();
+        }
+
+        async function removeVM() {
+            await fetchWithLoading(`/vm_manager/remove_vm`);
+            await vmStatus();
+        }
+
+        async function extendVM() {
+            await fetchWithLoading(`/vm_manager/extend_vm`);
+            await vmStatus();
+        }
+
+        async function restartVM() {
+            await fetchWithLoading(`/vm_manager/restart_vm`);
+            await vmStatus();
+        }
+
+        function updateUI(result) {
+            const { status, port, password, expiration_time } = result;
+
+            expirationTimestamp = new Date(expiration_time).getTime();
+
+            switch (status) {
+                case 'running':
+                    setStatus('running', 'Running');
+                    toggleButtons('running');
+                    displayVmInfo(port, password);
+                    displaySshCommand(port);
+                    startCountdown();
+                    break;
+                case 'not_created':
+                    setStatus('not_created', 'Not created');
+                    toggleButtons('not_created');
+                    hideSshCommand();
+                    hideVmInfo()
+                    break;
+                default:
+                    setStatus('stopped', 'Stopped');
+                    toggleButtons('stopped');
+                    hideSshCommand();
+                    hideVmInfo()
+                    break;
+            }
+        }
+
+        function toggleButtons(status) {
+            const createBtn = document.getElementById('createBtn');
+            const removeBtn = document.getElementById('removeBtn');
+            const extendBtn = document.getElementById('extendBtn');
+            const restartBtn = document.getElementById('restartBtn');
+
+            switch (status) {
+                case 'running':
+                    createBtn.style.display = 'none';
+                    removeBtn.style.display = 'inline-block';
+                    extendBtn.style.display = 'inline-block';
+                    restartBtn.style.display = 'inline-block';
+                    break;
+                case 'not_created':
+                    createBtn.style.display = 'inline-block';
+                    removeBtn.style.display = 'none';
+                    extendBtn.style.display = 'none';
+                    restartBtn.style.display = 'none';
+                    break;
+                default:
+                    createBtn.style.display = 'none';
+                    removeBtn.style.display = 'inline-block';
+                    extendBtn.style.display = 'none';
+                    restartBtn.style.display = 'inline-block';
+                    break;
+            }
+        }
+
+        function setStatus(statusClass, statusText) {
+            const statusDot = document.getElementById('statusDot');
+            const statusTextElement = document.getElementById('statusText');
+            statusDot.className = `status-dot ${statusClass}`;
+            statusTextElement.innerText = `Status: ${statusText}`;
+        }
+
+        function displayVmInfo(port, password) {
+            document.getElementById('vmInfo').innerHTML = `Port: <span class="badge badge-primary badge-pill">${port}</span>  Password: <span class="badge badge-primary badge-pill">${password}</span>  Expires in: <span class="badge badge-primary badge-pill" id="countdown"></span>`;
+        }
+
+        function hideVmInfo() {
+            document.getElementById('vmInfo').innerText = '';
+        }
+
+        function displaySshCommand(port) {
+            const copyButton = document.getElementById('copy-button');
+            copyButton.style.display = 'block';
+
+            document.getElementById('sshText').innerText = `ssh -p ${port} student@ctf.polandcentral.cloudapp.azure.com`;
+        }
+
+        function hideSshCommand() {
+            const copyButton = document.getElementById('copy-button');
+            copyButton.style.display = 'none';
+
+            document.getElementById('sshText').innerText = 'Create a machine and connect to it via ssh';
+        }
+
+        function copySSH() {
+            const sshTextElement = document.getElementById('sshText').innerText;
+            navigator.clipboard.writeText(sshTextElement).then(() => {
+                alert('Copied to the clipboard.');
+            }, (err) => {
+                alert('Error: ' + err);
+            });
+        }
+
+        function startCountdown() {
+            const countdownElement = document.getElementById('countdown');
+
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = expirationTimestamp - now;
+
+                if (distance < 0) {
+                    clearInterval(interval);
+                    countdownElement.innerText = "EXPIRED";
+                    return;
+                }
+
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                countdownElement.innerText = `${minutes}m ${seconds}s`;
+            }
+
+            updateCountdown();
+            const interval = setInterval(updateCountdown, 1000);
+        }
+
+        window.onload = vmStatus;
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
