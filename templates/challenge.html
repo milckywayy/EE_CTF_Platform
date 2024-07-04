@@ -14,9 +14,6 @@
                 <div class="card-body">
                     <h4>{{ _('Challenge') }}</h4>
                     <p class="lead">{{ ch_desc | safe }}</p>
-
-                    <iframe class="container_widget" src="{{ url_for('vm_manager', image='archlinux') }}"></iframe>
-
                     <hr class="my-4">
                     <form action="{{ url_for('submit_flag', challenge_id=ch_id) }}" method="POST" class="mt-4">
                         <div class="input-group">

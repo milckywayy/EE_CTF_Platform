@@ -40,8 +40,7 @@ usosapi = USOSAPISession(
     'email'
 )
 
-VM_MANAGER_API = 'http://127.0.0.1:8080'
-# VM_MANAGER_API = 'http://172.22.92.248:8080'
+VM_MANAGER_API = 'http://172.22.92.248:8080'
 
 
 @babel.localeselector
