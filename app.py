@@ -312,4 +312,5 @@ def api_restart_vm():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
+    pass
