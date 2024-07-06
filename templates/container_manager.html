@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VM Management</title>
+    <title>Container Manager</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
@@ -32,10 +32,10 @@
         .loading, .not_created {
             background-color: yellow;
         }
-        #sshText {
+        #access_command_text {
             word-break: break-all;
         }
-        .ssh-command {
+        .access_command {
             margin-top: 10px;
             padding: 10px;
             background-color: #f8f9fa;
@@ -55,28 +55,32 @@
         .badge-pill {
             margin: 0 5px 5px 0;
         }
+        .btn-loading {
+            pointer-events: none;
+            opacity: 0.6;
+        }
     </style>
 </head>
 <body>
     <div class="container-fluid p-3">
-        <div class="mb-3"><b>VM manager - {{ image }}</b></div>
+        <div class="mb-3"><b>Container manager - {{ image }}</b></div>
 
         <div class="status-indicator mb-2">
             <div id="statusDot" class="status-dot"></div>
             <div id="statusText" class="status-text">Status: Loading</div>
-            <div id="vmInfo"></div>
+            <div id="containerInfo"></div>
         </div>
 
-        <div class="mb-3" role="group" aria-label="VM Actions">
-            <button class="btn btn-primary" id="createBtn" onclick="makeVM()">Create VM</button>
-            <button class="btn btn-danger" id="removeBtn" onclick="removeVM()">Delete VM</button>
-            <button class="btn btn-warning" id="extendBtn" onclick="extendVM()">Extend time</button>
-            <button class="btn btn-secondary" id="restartBtn" onclick="restartVM()">Restart VM</button>
+        <div class="mb-3" role="group" aria-label="Container Actions">
+            <button class="btn btn-primary" id="createBtn" onclick="makeContainer()">Create</button>
+            <button class="btn btn-danger" id="removeBtn" onclick="removeContainer()">Delete</button>
+            <button class="btn btn-warning" id="extendBtn" onclick="extendContainer()">Extend time</button>
+            <button class="btn btn-secondary" id="restartBtn" onclick="restartContainer()">Restart</button>
         </div>
 
-        <div class="ssh-command p-2 bg-transparent border rounded">
-            <span id="sshText"></span>
-            <button id="copy-button" class="btn btn-sm btn-light" onclick="copySSH()"><i class="far fa-copy"></i></button>
+        <div class="access_command p-2 bg-transparent border rounded">
+            <span id="access_command_text"></span>
+            <button id="copy-button" class="btn btn-sm btn-light" onclick="copyAccessCommand()"><i class="far fa-copy"></i></button>
         </div>
     </div>
 
@@ -85,7 +89,8 @@
 
         async function fetchWithLoading(url, options) {
             setStatus('loading', 'Loading');
-            hideVmInfo()
+            hideContainerInfo();
+            disableButtons(true);
             try {
                 const response = await fetch(url, options);
                 const result = await response.json();
@@ -100,39 +105,53 @@
             } catch (error) {
                 alert(error.message)
                 return null;
+            } finally {
+                disableButtons(false);
             }
         }
 
-        async function vmStatus() {
-            const result = await fetchWithLoading(`/vm_manager/vm_status`);
+        function disableButtons(state) {
+            const buttons = document.querySelectorAll('#createBtn, #removeBtn, #extendBtn, #restartBtn');
+            buttons.forEach(button => {
+                if (state) {
+                    button.classList.add('btn-loading');
+                    button.disabled = true;
+                } else {
+                    button.classList.remove('btn-loading');
+                    button.disabled = false;
+                }
+            });
+        }
 
+        async function containerStatus() {
+            const result = await fetchWithLoading(`/container_manager/container_status`);
             if (result) {
                 updateUI(result);
             }
         }
 
-        async function makeVM() {
-            await fetchWithLoading(`/vm_manager/make_vm/{{ image }}`);
-            await vmStatus();
+        async function makeContainer() {
+            await fetchWithLoading(`/container_manager/make_container/{{ image }}`);
+            await containerStatus();
         }
 
-        async function removeVM() {
-            await fetchWithLoading(`/vm_manager/remove_vm`);
-            await vmStatus();
+        async function removeContainer() {
+            await fetchWithLoading(`/container_manager/remove_container`);
+            await containerStatus();
         }
 
-        async function extendVM() {
-            await fetchWithLoading(`/vm_manager/extend_vm`);
-            await vmStatus();
+        async function extendContainer() {
+            await fetchWithLoading(`/container_manager/extend_container`);
+            await containerStatus();
         }
 
-        async function restartVM() {
-            await fetchWithLoading(`/vm_manager/restart_vm`);
-            await vmStatus();
+        async function restartContainer() {
+            await fetchWithLoading(`/container_manager/restart_container`);
+            await containerStatus();
         }
 
         function updateUI(result) {
-            const { status, port, password, expiration_time } = result;
+            const { status, port, password, expiration_time, access_command } = result;
 
             expirationTimestamp = new Date(expiration_time).getTime();
 
@@ -140,21 +159,21 @@
                 case 'running':
                     setStatus('running', 'Running');
                     toggleButtons('running');
-                    displayVmInfo(port, password);
-                    displaySshCommand(port);
+                    displayContainerInfo(port, password);
+                    displaySshCommand(access_command);
                     startCountdown();
                     break;
                 case 'not_created':
                     setStatus('not_created', 'Not created');
                     toggleButtons('not_created');
                     hideSshCommand();
-                    hideVmInfo()
+                    hideContainerInfo();
                     break;
                 default:
                     setStatus('stopped', 'Stopped');
                     toggleButtons('stopped');
                     hideSshCommand();
-                    hideVmInfo()
+                    hideContainerInfo();
                     break;
             }
         }
@@ -194,30 +213,31 @@
             statusTextElement.innerText = `Status: ${statusText}`;
         }
 
-        function displayVmInfo(port, password) {
-            document.getElementById('vmInfo').innerHTML = `Port: <span class="badge badge-primary badge-pill">${port}</span>  Password: <span class="badge badge-primary badge-pill">${password}</span>  Expires in: <span class="badge badge-primary badge-pill" id="countdown"></span>`;
+        function displayContainerInfo(port, password) {
+            document.getElementById('containerInfo').innerHTML = `Port: <span class="badge badge-primary badge-pill">${port}</span>  Password: <span class="badge badge-primary badge-pill">${password}</span>  Expires in: <span class="badge badge-primary badge-pill" id="countdown"></span>`;
         }
 
-        function hideVmInfo() {
-            document.getElementById('vmInfo').innerText = '';
+        function hideContainerInfo() {
+            document.getElementById('containerInfo').innerText = '';
         }
 
-        function displaySshCommand(port) {
+        function displaySshCommand(access_command) {
             const copyButton = document.getElementById('copy-button');
             copyButton.style.display = 'block';
 
-            document.getElementById('sshText').innerText = `ssh -p ${port} student@ctf.polandcentral.cloudapp.azure.com`;
+            access_command = access_command.replace("<server_domain>", "{{ manager_domain }}")
+            document.getElementById('access_command_text').innerText = access_command;
         }
 
         function hideSshCommand() {
             const copyButton = document.getElementById('copy-button');
             copyButton.style.display = 'none';
 
-            document.getElementById('sshText').innerText = 'Create a machine and connect to it via ssh';
+            document.getElementById('access_command_text').innerText = "Don't be shy and try out our containers!";
         }
 
-        function copySSH() {
-            const sshTextElement = document.getElementById('sshText').innerText;
+        function copyAccessCommand() {
+            const sshTextElement = document.getElementById('access_command_text').innerText;
             navigator.clipboard.writeText(sshTextElement).then(() => {
                 alert('Copied to the clipboard.');
             }, (err) => {
@@ -248,7 +268,7 @@
             const interval = setInterval(updateCountdown, 1000);
         }
 
-        window.onload = vmStatus;
+        window.onload = containerStatus;
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

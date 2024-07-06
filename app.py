@@ -10,29 +10,23 @@ from usosapi.usosapi import USOSAPISession, USOSAPIAuthorizationError
 
 from model import db, User, Challenge, Solve, Rating, Comment
 
-# Flask app initialization
 app = Flask(__name__)
 app.secret_key = os.environ.get('EE-CTF_SECRET_KEY', os.urandom(24))
 
-# Configurations
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['BABEL_DEFAULT_LOCALE'] = 'pl'
 app.config['BABEL_SUPPORTED_LOCALES'] = ['en', 'pl']
 
-# Initialize Babel and database
 babel = Babel(app)
 db.init_app(app)
 
-# Create database tables
 with app.app_context():
     db.create_all()
 
-# Load USOS API credentials
 with open('credentials/usos_api_credentials.json', 'r') as file:
     usosapi_credentials = json.load(file)
 
-# Initialize USOS API session
 usosapi = USOSAPISession(
     usosapi_credentials['api_base_address'],
     usosapi_credentials['consumer_key'],
@@ -40,7 +34,8 @@ usosapi = USOSAPISession(
     'email'
 )
 
-VM_MANAGER_API = 'http://172.22.92.248:8080'
+CONTAINER_MANAGER_API = 'http://127.0.0.1:8080'
+CONTAINER_MANAGER_DOMAIN = 'localhost'
 
 
 @babel.localeselector
@@ -264,53 +259,47 @@ def submit_comment(challenge_id):
     return redirect(request.referrer)
 
 
-@app.route('/vm_manager/manager/<image>')
+@app.route('/container_manager/manager/<image>')
 @login_required
-def vm_manager(image):
-    session_id = session['user']['id']
-    return render_template('vm_manager.html', session_id=session_id, image=image)
+def container_manager(image):
+    return render_template('container_manager.html', image=image, manager_domain=CONTAINER_MANAGER_DOMAIN)
 
 
-@app.route('/vm_manager/vm_status')
+@app.route('/container_manager/container_status')
 @login_required
-def api_vm_status():
+def container_status():
     session_id = session['user']['id']
-    response = requests.post(f'{VM_MANAGER_API}/vm_status', json={'session_id': session_id})
+    response = requests.post(f'{CONTAINER_MANAGER_API}/container_status', json={'session_id': session_id})
     return jsonify(response.json())
 
 
-@app.route('/vm_manager/make_vm/<image>')
+@app.route('/container_manager/make_container/<image>')
 @login_required
-def api_make_vm(image):
+def make_container(image):
     session_id = session['user']['id']
-    response = requests.post(f'{VM_MANAGER_API}/make_vm/{image}', json={'session_id': session_id})
+    response = requests.post(f'{CONTAINER_MANAGER_API}/make_container/{image}', json={'session_id': session_id})
     return jsonify(response.json())
 
 
-@app.route('/vm_manager/remove_vm')
+@app.route('/container_manager/remove_container')
 @login_required
-def api_remove_vm():
+def remove_container():
     session_id = session['user']['id']
-    response = requests.delete(f'{VM_MANAGER_API}/remove_vm', json={'session_id': session_id})
+    response = requests.delete(f'{CONTAINER_MANAGER_API}/remove_container', json={'session_id': session_id})
     return jsonify(response.json())
 
 
-@app.route('/vm_manager/extend_vm')
+@app.route('/container_manager/extend_container')
 @login_required
-def api_extend_vm():
+def extend_container():
     session_id = session['user']['id']
-    response = requests.post(f'{VM_MANAGER_API}/extend_vm', json={'session_id': session_id})
+    response = requests.post(f'{CONTAINER_MANAGER_API}/extend_container', json={'session_id': session_id})
     return jsonify(response.json())
 
 
-@app.route('/vm_manager/restart_vm')
+@app.route('/container_manager/restart_container')
 @login_required
-def api_restart_vm():
+def restart_container():
     session_id = session['user']['id']
-    response = requests.post(f'{VM_MANAGER_API}/restart_vm', json={'session_id': session_id})
+    response = requests.post(f'{CONTAINER_MANAGER_API}/restart_container', json={'session_id': session_id})
     return jsonify(response.json())
-
-
-if __name__ == '__main__':
-    # app.run(debug=True)
-    pass
