@@ -6,8 +6,10 @@ from functools import wraps
 import requests
 from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify
 from flask_babel import Babel, gettext as _
-from usosapi.usosapi import USOSAPISession, USOSAPIAuthorizationError
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
+from usosapi.usosapi import USOSAPISession, USOSAPIAuthorizationError
 from model import db, User, Challenge, Solve, Rating, Comment
 
 app = Flask(__name__)
@@ -17,6 +19,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['BABEL_DEFAULT_LOCALE'] = 'pl'
 app.config['BABEL_SUPPORTED_LOCALES'] = ['en', 'pl']
+
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["500 per day", "200 per hour", "15 per minute"]
+)
 
 babel = Babel(app)
 db.init_app(app)
