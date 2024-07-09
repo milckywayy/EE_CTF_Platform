@@ -42,8 +42,8 @@ usosapi = USOSAPISession(
     'email'
 )
 
-CONTAINER_MANAGER_API = 'http://127.0.0.1:8080'
-CONTAINER_MANAGER_DOMAIN = 'localhost'
+CONTAINER_MANAGER_API = 'http://container-manager.francecentral.cloudapp.azure.com:8080'
+CONTAINER_MANAGER_DOMAIN = 'container-manager.francecentral.cloudapp.azure.com'
 
 ADMIN_IDS = ['1178835', '1187538']
 
