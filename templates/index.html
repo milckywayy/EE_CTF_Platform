@@ -28,7 +28,7 @@
                             <a href="{{ url_for('challenge', edition_number=challenge.edition_number, challenge_number=challenge.number) }}" class="challenge-link">{{ _('Challenge') }} {{ challenge.number }}: {{ challenge.name }}</a>
                         {% endif %}
                     {% else %}
-                        <span class="challenge-text">{{ _('Available from') + ' ' + challenge.start_date.strftime('%Y-%m-%d') }}</span>
+                        <span class="challenge-text">{{ _('Available from') + ' ' + challenge.start_date.strftime('%Y-%m-%d %H:%M') }}</span>
                     {% endif %}
                     <span class="badge badge-pill {% if challenge.difficulty == 'Easy' %}badge-primary{% elif challenge.difficulty == 'Medium' %}badge-warning{% elif challenge.difficulty == 'Hard' %}badge-danger{% endif %}">{{ _(challenge.difficulty) }}</span>
                 </li>
