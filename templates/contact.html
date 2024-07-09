@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Contact - EE CTF') }}{% endblock %}
+
+{% block content %}
+    <div class="container mt-5 mb-5 flex-grow-1">
+        <h1 class="text-center mb-4">{{ _('Contact Us') }}</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card contact-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Mikołaj Frączek</h5>
+                        <p class="card-text"><i class="fas fa-envelope"></i> 01178835@pw.edu.pl</p>
+                        <p class="card-text">{{ _('Project Lead, infrastructure, container management, technical matters.') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card contact-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Bartosz Głażewski</h5>
+                        <p class="card-text"><i class="fas fa-envelope"></i> 01187538@pw.edu.pl</p>
+                        <p class="card-text">{{ 'Coordination of Content, Quality Assurance, and Task Management in CTF.' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -78,6 +78,26 @@ def home():
     return render_template('index.html', challenges=challenges)
 
 
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+
+@app.route('/privacy-policy')
+def privacy_policy():
+    return render_template('privacy_policy.html')
+
+
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
+
+
+@app.route('/archive')
+def archive():
+    return render_template('archive.html')
+
+
 @app.route('/profile')
 @login_required
 def profile():
