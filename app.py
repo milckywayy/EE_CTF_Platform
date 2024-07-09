@@ -45,6 +45,8 @@ usosapi = USOSAPISession(
 CONTAINER_MANAGER_API = 'http://127.0.0.1:8080'
 CONTAINER_MANAGER_DOMAIN = 'localhost'
 
+ADMIN_IDS = ['1178835', '1187538']
+
 
 @babel.localeselector
 def get_locale():
@@ -54,6 +56,13 @@ def get_locale():
 @app.context_processor
 def inject_conf_var():
     return dict(get_locale=get_locale)
+
+
+def is_admin():
+    if 'logged_in' in session and session['user']['id'] in ADMIN_IDS:
+        return True
+
+    return False
 
 
 def login_required(f):
@@ -75,7 +84,7 @@ def change_language(language):
 @app.route('/')
 def home():
     challenges = Challenge.query.filter_by(edition_number=1).order_by(Challenge.number).all()
-    return render_template('index.html', challenges=challenges)
+    return render_template('index.html', challenges=challenges, is_admin=is_admin())
 
 
 @app.route('/contact')
@@ -86,16 +95,6 @@ def contact():
 @app.route('/privacy-policy')
 def privacy_policy():
     return render_template('privacy_policy.html')
-
-
-@app.route('/terms')
-def terms():
-    return render_template('terms.html')
-
-
-@app.route('/archive')
-def archive():
-    return render_template('archive.html')
 
 
 @app.route('/profile')
@@ -134,7 +133,8 @@ def login():
                 'first_name': user_data['first_name'],
                 'last_name': user_data['last_name'],
                 'email': user_data['email'],
-                'photo_url': user_data['photo_urls']['200x200']
+                'photo_url': user_data['photo_urls']['200x200'],
+                'is_admin': True if user_data['id'] in ADMIN_IDS else False
             }
 
             return redirect(url_for('home'))
@@ -165,7 +165,7 @@ def challenge(edition_number, challenge_number):
     lang = get_locale()
     challenge = Challenge.query.filter_by(edition_number=edition_number, number=challenge_number).first_or_404()
 
-    if not challenge.is_available():
+    if not challenge.is_available() and not is_admin():
         flash(_("Challenge not available yet."), "danger")
         return redirect(url_for('home'))
 
