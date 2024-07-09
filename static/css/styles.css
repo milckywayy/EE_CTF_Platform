@@ -311,3 +311,9 @@ h1, h2, h3, h4, h5, h5 {
     border-radius: 0.5rem;
     border: 0;
 }
+
+/* Privacy Policy */
+.privacy-policy-list > li::marker {
+    font-size: 1.65em;
+    font-weight: bold;
+}
