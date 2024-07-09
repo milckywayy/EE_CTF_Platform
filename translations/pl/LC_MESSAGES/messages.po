@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-30 16:41+0200\n"
+"POT-Creation-Date: 2024-07-10 01:14+0200\n"
 "PO-Revision-Date: 2024-06-27 17:21+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pl\n"
@@ -19,27 +19,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.15.0\n"
 
-#: app.py:57
+#: app.py:72
 msgid "Please log in to access this page."
 msgstr "Zaloguj się, aby uzyskać dostęp do tej strony."
 
-#: app.py:123
+#: app.py:143
 msgid "Error during USOS authentication. Please try again."
 msgstr "Błąd podczas uwierzytelniania USOS. Spróbuj ponownie."
 
-#: app.py:138
+#: app.py:158
 msgid "You have been logged out."
 msgstr "Zostałeś wylogowany."
 
-#: app.py:149
+#: app.py:169
 msgid "Challenge not available yet."
 msgstr "Wyzwanie nie jest jeszcze dostępne."
 
-#: app.py:220
+#: app.py:235
 msgid "Correct flag! Well done!"
 msgstr "Prawidłowa flaga! Dobra robota!"
 
-#: app.py:222
+#: app.py:237
 msgid "Incorrect flag. Try again!"
 msgstr "Nieprawidłowa flaga. Spróbu jeszcze raz!"
 
@@ -47,20 +47,27 @@ msgstr "Nieprawidłowa flaga. Spróbu jeszcze raz!"
 msgid "EE CTF"
 msgstr "EE CTF"
 
-#: templates/base.html:32
+#: templates/base.html:33
 msgid "Logout"
 msgstr "Wyloguj się"
 
-#: templates/base.html:38
+#: templates/base.html:39
 msgid "Login"
 msgstr "Zaloguj się"
 
-#: templates/base.html:68
+#: templates/base.html:70 templates/privacy_policy.html:56
+msgid "Contact"
+msgstr "Kontakt"
+
+#: templates/base.html:71
+msgid "Privacy policy"
+msgstr "Polityka prywatności"
+
+#: templates/base.html:73
 msgid "2024 WRS EE"
 msgstr "2024 WRS EE"
 
 #: templates/challenge.html:3
-#, fuzzy
 msgid "Challenge - EE CTF"
 msgstr "Strona główna - EE CTF"
 
@@ -81,28 +88,50 @@ msgid "Top 10 Solvers"
 msgstr "Top 10 wyników"
 
 #: templates/challenge.html:47
+msgid "Not solved yet!"
+msgstr "Nie rozwiązane!"
+
+#: templates/challenge.html:55
 msgid "Rate this Challenge"
 msgstr "Oceń wyzwanie"
 
-#: templates/challenge.html:66
+#: templates/challenge.html:74
 msgid "Share your thoughts about challenge"
 msgstr "Podziel się opinią o wyzwaniu"
 
-#: templates/challenge.html:72
+#: templates/challenge.html:80
 msgid "Submit Comment"
 msgstr "Zapisz komentarz"
 
-#: templates/challenge.html:77
+#: templates/challenge.html:85
 msgid "Edit Comment"
 msgstr "Edytuj komentarz"
 
-#: templates/challenge.html:78
+#: templates/challenge.html:86
 msgid "Save Comment"
 msgstr "Zapisz komentarz"
 
-#: templates/challenge.html:79
+#: templates/challenge.html:87
 msgid "Cancel"
 msgstr "Anuluj"
+
+#: templates/contact.html:3
+msgid "Contact - EE CTF"
+msgstr "Logowanie - EE CTF"
+
+#: templates/contact.html:7
+msgid "Contact Us"
+msgstr "Kontakt"
+
+#: templates/contact.html:14
+msgid "Project Lead, infrastructure, container management, technical matters."
+msgstr ""
+"Kierownik projektu, infrastruktura, zarządzanie kontenerami, sprawy "
+"techniczne."
+
+#: templates/contact.html:23
+msgid "Coordination of Content, Quality Assurance, and Task Management in CTF."
+msgstr "Koordynacja treści, zapewnianie jakości oraz zarządzanie zadaniami w CTF."
 
 #: templates/index.html:3
 msgid "Home - EE CTF"
@@ -110,7 +139,7 @@ msgstr "Strona główna - EE CTF"
 
 #: templates/index.html:7
 msgid "Welcome to the Electrical CTF Platform!"
-msgstr "Witamy na platformie Electrical CTF!"
+msgstr "Witamy na platformie Elektryczny CTF!"
 
 #: templates/index.html:8
 msgid "Enhance your cybersecurity skills with our CTF challenges."
@@ -148,6 +177,116 @@ msgstr ""
 msgid "Login with USOS"
 msgstr "Zaloguj się przez USOS"
 
+#: templates/privacy_policy.html:3
+msgid "Privacy policy - EE CTF"
+msgstr "Profil - EE CTF"
+
+#: templates/privacy_policy.html:9
+msgid "Privacy Policy"
+msgstr "Polityka prywatności"
+
+#: templates/privacy_policy.html:10
+msgid "Effective date: July 10, 2024"
+msgstr "Data wejścia w życie: 10 lipca 2024"
+
+#: templates/privacy_policy.html:16
+msgid "Introduction"
+msgstr "Wprowadzenie"
+
+#: templates/privacy_policy.html:17
+msgid ""
+"This Privacy Policy applies to the online platform \"Electric CTF\". In "
+"this document, we describe what personal data we collect from our users, "
+"how it is stored, secured, and how it is used."
+msgstr ""
+"Polityka prywatności dotyczy platformy online \"Elektryczny CTF\". W tym "
+"dokumencie opisujemy, jakie dane osobowe zbieramy od naszych "
+"użytkowników, jak są one przechowywane, zabezpieczane i wykorzystywane."
+
+#: templates/privacy_policy.html:21
+msgid "Data Collected"
+msgstr "Zbierane dane"
+
+#: templates/privacy_policy.html:23
+msgid "USOS ID"
+msgstr "ID USOS"
+
+#: templates/privacy_policy.html:24
+msgid "Email address in the PW domain"
+msgstr "Adres e-mail w domenie PW"
+
+#: templates/privacy_policy.html:25
+msgid "First and last name"
+msgstr "Imię i nazwisko"
+
+#: templates/privacy_policy.html:26
+msgid "Profile picture in the USOS system (if not restricted)"
+msgstr "Zdjęcie profilowe w systemie USOS (jeśli dostępne)"
+
+#: templates/privacy_policy.html:31
+msgid "Data Storage and Security"
+msgstr "Przechowywanie i bezpieczeństwo danych"
+
+#: templates/privacy_policy.html:32
+msgid "All collected data is stored in a database on our server."
+msgstr "Wszystkie zebrane dane są przechowywane w bazie danych na naszym serwerze."
+
+#: templates/privacy_policy.html:36
+msgid "Use of Data"
+msgstr "Wykorzystanie danych"
+
+#: templates/privacy_policy.html:37
+msgid "Collected data is used for the following purposes:"
+msgstr "Zebrane dane są wykorzystywane do następujących celów:"
+
+#: templates/privacy_policy.html:39
+msgid "User identification"
+msgstr "Identyfikacja użytkownika"
+
+#: templates/privacy_policy.html:40
+msgid "Contact with event participants (e.g., for awarding prizes)"
+msgstr "Kontakt z uczestnikami wydarzeń (np. w celu przyznawania nagród)"
+
+#: templates/privacy_policy.html:41
+msgid "Creating usage statistics of the platform"
+msgstr "Tworzenie statystyk użytkowania platformy"
+
+#: templates/privacy_policy.html:46
+msgid "User Rights"
+msgstr "Prawa użytkownika"
+
+#: templates/privacy_policy.html:47
+msgid ""
+"The user of the platform has the right to access, correct, and delete "
+"their personal data. The user can also withdraw their consent to the "
+"processing of personal data at any time."
+msgstr ""
+"Użytkownik platformy ma prawo do dostępu, poprawiania i usuwania swoich "
+"danych osobowych. Użytkownik może również w dowolnym momencie wycofać "
+"swoją zgodę na przetwarzanie danych osobowych."
+
+#: templates/privacy_policy.html:51
+msgid "Changes to the Privacy Policy"
+msgstr "Zmiany w Polityce Prywatności"
+
+#: templates/privacy_policy.html:52
+msgid ""
+"We reserve the right to make changes to this Privacy Policy. We will "
+"inform users of any changes by updating this document."
+msgstr ""
+"Zastrzegamy sobie prawo do wprowadzania zmian w Polityce Prywatności. "
+"Poinformujemy użytkowników o wszelkich zmianach poprzez aktualizację tego"
+" dokumentu."
+
+#: templates/privacy_policy.html:57
+msgid ""
+"If you have any questions regarding this Privacy Policy, please contact "
+"us at <a href=\"mailto:01178835@pw.edu.pl\">01178835@pw.edu.pl</a>."
+msgstr ""
+"Jeśli masz jakiekolwiek pytania dotyczące Polityki Prywatności, prosimy o"
+" kontakt pod adresem <a "
+"href=\"mailto:01178835@pw.edu.pl\">01178835@pw.edu.pl</a>."
+
 #: templates/profile.html:3
 msgid "Profile - EE CTF"
 msgstr "Profil - EE CTF"
@@ -172,12 +311,12 @@ msgstr "Nazwisko"
 msgid "Email"
 msgstr "Email"
 
-msgid "Easy"
-msgstr "Łatwe"
+#~ msgid "Easy"
+#~ msgstr "Łatwe"
 
-msgid "Medium"
-msgstr "Średnie"
+#~ msgid "Medium"
+#~ msgstr "Średnie"
 
-msgid "Hard"
-msgstr "Trudne"
+#~ msgid "Hard"
+#~ msgstr "Trudne"
 

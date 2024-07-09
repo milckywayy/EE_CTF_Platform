@@ -67,8 +67,8 @@
             <a href="{{ url_for('change_language', language='pl') }}" class="language-link">Polski</a> |
             <a href="{{ url_for('change_language', language='en') }}" class="language-link">English</a>
             <div class="footer-links mt-2">
-                <a href="{{ url_for('contact') }}" class="footer-link">Contact</a> |
-                <a href="{{ url_for('privacy_policy') }}" class="footer-link">Privacy policy</a>
+                <a href="{{ url_for('contact') }}" class="footer-link">{{ _('Contact') }}</a> |
+                <a href="{{ url_for('privacy_policy') }}" class="footer-link">{{ _('Privacy policy') }}</a>
             </div>
             <p class="mt-2">&copy; {{ _('2024 WRS EE') }}</p>
         </footer>

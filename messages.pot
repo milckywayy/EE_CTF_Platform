@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-30 16:41+0200\n"
+"POT-Creation-Date: 2024-07-10 01:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,27 +17,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.15.0\n"
 
-#: app.py:57
+#: app.py:72
 msgid "Please log in to access this page."
 msgstr ""
 
-#: app.py:123
+#: app.py:143
 msgid "Error during USOS authentication. Please try again."
 msgstr ""
 
-#: app.py:138
+#: app.py:158
 msgid "You have been logged out."
 msgstr ""
 
-#: app.py:149
+#: app.py:169
 msgid "Challenge not available yet."
 msgstr ""
 
-#: app.py:220
+#: app.py:235
 msgid "Correct flag! Well done!"
 msgstr ""
 
-#: app.py:222
+#: app.py:237
 msgid "Incorrect flag. Try again!"
 msgstr ""
 
@@ -45,15 +45,23 @@ msgstr ""
 msgid "EE CTF"
 msgstr ""
 
-#: templates/base.html:32
+#: templates/base.html:33
 msgid "Logout"
 msgstr ""
 
-#: templates/base.html:38
+#: templates/base.html:39
 msgid "Login"
 msgstr ""
 
-#: templates/base.html:68
+#: templates/base.html:70 templates/privacy_policy.html:56
+msgid "Contact"
+msgstr ""
+
+#: templates/base.html:71
+msgid "Privacy policy"
+msgstr ""
+
+#: templates/base.html:73
 msgid "2024 WRS EE"
 msgstr ""
 
@@ -78,27 +86,47 @@ msgid "Top 10 Solvers"
 msgstr ""
 
 #: templates/challenge.html:47
+msgid "Not solved yet!"
+msgstr ""
+
+#: templates/challenge.html:55
 msgid "Rate this Challenge"
 msgstr ""
 
-#: templates/challenge.html:66
+#: templates/challenge.html:74
 msgid "Share your thoughts about challenge"
 msgstr ""
 
-#: templates/challenge.html:72
+#: templates/challenge.html:80
 msgid "Submit Comment"
 msgstr ""
 
-#: templates/challenge.html:77
+#: templates/challenge.html:85
 msgid "Edit Comment"
 msgstr ""
 
-#: templates/challenge.html:78
+#: templates/challenge.html:86
 msgid "Save Comment"
 msgstr ""
 
-#: templates/challenge.html:79
+#: templates/challenge.html:87
 msgid "Cancel"
+msgstr ""
+
+#: templates/contact.html:3
+msgid "Contact - EE CTF"
+msgstr ""
+
+#: templates/contact.html:7
+msgid "Contact Us"
+msgstr ""
+
+#: templates/contact.html:14
+msgid "Project Lead, infrastructure, container management, technical matters."
+msgstr ""
+
+#: templates/contact.html:23
+msgid "Coordination of Content, Quality Assurance, and Task Management in CTF."
 msgstr ""
 
 #: templates/index.html:3
@@ -139,6 +167,104 @@ msgstr ""
 
 #: templates/login.html:15
 msgid "Login with USOS"
+msgstr ""
+
+#: templates/privacy_policy.html:3
+msgid "Privacy policy - EE CTF"
+msgstr ""
+
+#: templates/privacy_policy.html:9
+msgid "Privacy Policy"
+msgstr ""
+
+#: templates/privacy_policy.html:10
+msgid "Effective date: July 10, 2024"
+msgstr ""
+
+#: templates/privacy_policy.html:16
+msgid "Introduction"
+msgstr ""
+
+#: templates/privacy_policy.html:17
+msgid ""
+"This Privacy Policy applies to the online platform \"Electric CTF\". In "
+"this document, we describe what personal data we collect from our users, "
+"how it is stored, secured, and how it is used."
+msgstr ""
+
+#: templates/privacy_policy.html:21
+msgid "Data Collected"
+msgstr ""
+
+#: templates/privacy_policy.html:23
+msgid "USOS ID"
+msgstr ""
+
+#: templates/privacy_policy.html:24
+msgid "Email address in the PW domain"
+msgstr ""
+
+#: templates/privacy_policy.html:25
+msgid "First and last name"
+msgstr ""
+
+#: templates/privacy_policy.html:26
+msgid "Profile picture in the USOS system (if not restricted)"
+msgstr ""
+
+#: templates/privacy_policy.html:31
+msgid "Data Storage and Security"
+msgstr ""
+
+#: templates/privacy_policy.html:32
+msgid "All collected data is stored in a database on our server."
+msgstr ""
+
+#: templates/privacy_policy.html:36
+msgid "Use of Data"
+msgstr ""
+
+#: templates/privacy_policy.html:37
+msgid "Collected data is used for the following purposes:"
+msgstr ""
+
+#: templates/privacy_policy.html:39
+msgid "User identification"
+msgstr ""
+
+#: templates/privacy_policy.html:40
+msgid "Contact with event participants (e.g., for awarding prizes)"
+msgstr ""
+
+#: templates/privacy_policy.html:41
+msgid "Creating usage statistics of the platform"
+msgstr ""
+
+#: templates/privacy_policy.html:46
+msgid "User Rights"
+msgstr ""
+
+#: templates/privacy_policy.html:47
+msgid ""
+"The user of the platform has the right to access, correct, and delete "
+"their personal data. The user can also withdraw their consent to the "
+"processing of personal data at any time."
+msgstr ""
+
+#: templates/privacy_policy.html:51
+msgid "Changes to the Privacy Policy"
+msgstr ""
+
+#: templates/privacy_policy.html:52
+msgid ""
+"We reserve the right to make changes to this Privacy Policy. We will "
+"inform users of any changes by updating this document."
+msgstr ""
+
+#: templates/privacy_policy.html:57
+msgid ""
+"If you have any questions regarding this Privacy Policy, please contact "
+"us at <a href=\"mailto:01178835@pw.edu.pl\">01178835@pw.edu.pl</a>."
 msgstr ""
 
 #: templates/profile.html:3
