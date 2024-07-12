@@ -3,7 +3,7 @@ from app import app
 
 serve(
     app,
-    host='0.0.0.0',
+    host='localhost',
     port=5000,
     threads=8,
     backlog=2048,
