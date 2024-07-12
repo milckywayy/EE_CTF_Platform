@@ -182,7 +182,7 @@ def challenge(edition_number, challenge_number):
         .join(Solve, Solve.user_id == User.id)
         .filter(Solve.challenge_id == ch_id)
         .order_by(Solve.solve_time.asc())
-        .limit(10)
+        .limit(5)
         .all())
 
     def format_time_difference(start_time, end_time):
