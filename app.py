@@ -4,7 +4,7 @@ from datetime import datetime
 from functools import wraps
 
 import requests
-from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify
+from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify, send_from_directory
 from flask_babel import Babel, gettext as _
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -331,3 +331,9 @@ def restart_container():
     session_id = session['user']['id']
     response = requests.post(f'{CONTAINER_MANAGER_API}/restart_container', json={'session_id': session_id})
     return jsonify(response.json())
+
+
+@app.route('/download/<filename>')
+def download_file(filename):
+    return send_from_directory('static/ctf_files', filename)
+
