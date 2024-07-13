@@ -42,6 +42,11 @@ usosapi = USOSAPISession(
     'email'
 )
 
+with open('credentials/container_manager_secret.json') as f:
+    secret_data = json.load(f)
+    SECRET_KEY = secret_data['secret']
+
+
 CONTAINER_MANAGER_API = 'http://container-manager.francecentral.cloudapp.azure.com:8080'
 CONTAINER_MANAGER_DOMAIN = 'container-manager.francecentral.cloudapp.azure.com'
 
@@ -293,11 +298,22 @@ def container_manager(image):
     return render_template('container_manager.html', image=image, manager_domain=CONTAINER_MANAGER_DOMAIN)
 
 
+def get_headers():
+    return {
+        'X-Secret-Key': SECRET_KEY,
+        'Content-Type': 'application/json'
+    }
+
+
 @app.route('/container_manager/container_status')
 @login_required
 def container_status():
     session_id = session['user']['id']
-    response = requests.post(f'{CONTAINER_MANAGER_API}/container_status', json={'session_id': session_id})
+    response = requests.post(
+        f'{CONTAINER_MANAGER_API}/container_status',
+        json={'session_id': session_id},
+        headers=get_headers()
+    )
     return jsonify(response.json())
 
 
@@ -305,7 +321,11 @@ def container_status():
 @login_required
 def make_container(image):
     session_id = session['user']['id']
-    response = requests.post(f'{CONTAINER_MANAGER_API}/make_container/{image}', json={'session_id': session_id})
+    response = requests.post(
+        f'{CONTAINER_MANAGER_API}/make_container/{image}',
+        json={'session_id': session_id},
+        headers=get_headers()
+    )
     return jsonify(response.json())
 
 
@@ -313,7 +333,11 @@ def make_container(image):
 @login_required
 def remove_container():
     session_id = session['user']['id']
-    response = requests.delete(f'{CONTAINER_MANAGER_API}/remove_container', json={'session_id': session_id})
+    response = requests.delete(
+        f'{CONTAINER_MANAGER_API}/remove_container',
+        json={'session_id': session_id},
+        headers=get_headers()
+    )
     return jsonify(response.json())
 
 
@@ -321,7 +345,11 @@ def remove_container():
 @login_required
 def extend_container():
     session_id = session['user']['id']
-    response = requests.post(f'{CONTAINER_MANAGER_API}/extend_container', json={'session_id': session_id})
+    response = requests.post(
+        f'{CONTAINER_MANAGER_API}/extend_container',
+        json={'session_id': session_id},
+        headers=get_headers()
+    )
     return jsonify(response.json())
 
 
@@ -329,7 +357,11 @@ def extend_container():
 @login_required
 def restart_container():
     session_id = session['user']['id']
-    response = requests.post(f'{CONTAINER_MANAGER_API}/restart_container', json={'session_id': session_id})
+    response = requests.post(
+        f'{CONTAINER_MANAGER_API}/restart_container',
+        json={'session_id': session_id},
+        headers=get_headers()
+    )
     return jsonify(response.json())
 
 
