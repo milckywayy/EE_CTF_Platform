@@ -11,10 +11,10 @@
     <div class="row justify-content-center d-flex">
         <div class="col-md-8 d-flex flex-fill">
             <div class="card challenge-card mb-4 flex-fill">
-                <div class="card-body">
+                <div class="card-body challenge-desc">
                     <h4>{{ _('Challenge') }}</h4>
                     <p class="lead">{{ ch_desc | safe }}</p>
-                    <hr class="my-4">
+                    <hr class="my-2">
                     <form action="{{ url_for('submit_flag', challenge_id=ch_id) }}" method="POST" class="mt-4">
                         <div class="input-group">
                             <input type="text" id="flagInput" name="flag" class="form-control" placeholder="{{ _('EE_CTF{your_flag_here}') }}" required>
