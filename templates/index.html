@@ -15,11 +15,11 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-12">
         <h3>{{ _('Available Challenges') }}</h3>
         <ul class="challenge-list list-group">
             {% for challenge in challenges %}
-                <li class="challenge-list list-group-item d-flex justify-content-between align-items-center {{ 'available-challenge' if challenge.is_available() or is_admin else 'unavailable-challenge' }}">
+                <li class="list-group-item d-flex justify-content-between align-items-center {{ 'available-challenge' if challenge.is_available() or is_admin else 'unavailable-challenge' }}">
                     <i class="{{ challenge.icon }}"></i>
                     {% if challenge.is_available() or is_admin %}
                         {% if get_locale() == 'pl' %}
