@@ -1,6 +1,8 @@
 import json
 import os
 import logging
+import threading
+import time
 from datetime import datetime
 from functools import wraps
 
@@ -51,6 +53,7 @@ with open('credentials/container_manager_secret.json') as f:
 
 CONTAINER_MANAGER_API = 'https://container-manager.francecentral.cloudapp.azure.com:443'
 CONTAINER_MANAGER_DOMAIN = 'container-manager.francecentral.cloudapp.azure.com'
+USOSAPI_SESSION_CHECK = 43_200  # Every 12 hours
 
 ADMIN_IDS = ['1178835', '1187538']
 
@@ -373,3 +376,14 @@ def restart_container():
 def download_file(filename):
     return send_from_directory('static/ctf_files', filename)
 
+
+def cleanup_usos_sessions():
+    while True:
+        logging.info(f"Cleaning up usos sessions")
+
+        usosapi.cleanup_auth_sessions()
+
+        time.sleep(USOSAPI_SESSION_CHECK)
+
+
+threading.Thread(target=cleanup_usos_sessions, daemon=True).start()
