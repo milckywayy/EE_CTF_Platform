@@ -47,7 +47,7 @@ with open('credentials/container_manager_secret.json') as f:
     SECRET_KEY = secret_data['secret']
 
 
-CONTAINER_MANAGER_API = 'http://container-manager.francecentral.cloudapp.azure.com:8080'
+CONTAINER_MANAGER_API = 'https://container-manager.francecentral.cloudapp.azure.com:443'
 CONTAINER_MANAGER_DOMAIN = 'container-manager.francecentral.cloudapp.azure.com'
 
 ADMIN_IDS = ['1178835', '1187538']
