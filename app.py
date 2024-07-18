@@ -1,5 +1,6 @@
 import json
 import os
+import logging
 from datetime import datetime
 from functools import wraps
 
@@ -11,6 +12,8 @@ from flask_limiter.util import get_remote_address
 
 from usosapi.usosapi import USOSAPISession, USOSAPIAuthorizationError
 from model import db, User, Challenge, Solve, Rating, Comment
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('EE-CTF_SECRET_KEY', os.urandom(24))
@@ -46,7 +49,6 @@ with open('credentials/container_manager_secret.json') as f:
     secret_data = json.load(f)
     SECRET_KEY = secret_data['secret']
 
-
 CONTAINER_MANAGER_API = 'https://container-manager.francecentral.cloudapp.azure.com:443'
 CONTAINER_MANAGER_DOMAIN = 'container-manager.francecentral.cloudapp.azure.com'
 
@@ -66,7 +68,6 @@ def inject_conf_var():
 def is_admin():
     if 'logged_in' in session and session['user']['id'] in ADMIN_IDS:
         return True
-
     return False
 
 
@@ -236,6 +237,7 @@ def submit_flag(challenge_id):
             )
             db.session.add(solve)
             db.session.commit()
+            logging.info(f"User {session['user']['id']} solved challenge {challenge_id}")
 
         flash(_("Correct flag! Well done!"), "success")
     else:
@@ -264,6 +266,7 @@ def submit_rating(challenge_id):
         db.session.add(new_rating)
 
     db.session.commit()
+    logging.info(f"User {user_id} submitted rating for challenge {challenge_id}")
 
     return jsonify({'success': 'Rating saved'}), 200
 
@@ -288,6 +291,7 @@ def submit_comment(challenge_id):
         saved_comment.comment = new_comment
 
     db.session.commit()
+    logging.info(f"User {user_id} submitted comment for challenge {challenge_id}")
 
     return redirect(request.referrer)
 
