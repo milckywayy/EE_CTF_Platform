@@ -195,6 +195,9 @@ def challenge(edition_number, challenge_number):
         .all())
 
     def format_time_difference(start_time, end_time):
+        if end_time < start_time:
+            start_time, end_time = end_time, start_time
+
         delta = end_time - start_time
         days = delta.days
         seconds = delta.seconds
