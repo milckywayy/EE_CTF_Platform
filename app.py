@@ -26,9 +26,10 @@ app.config['BABEL_DEFAULT_LOCALE'] = 'pl'
 app.config['BABEL_SUPPORTED_LOCALES'] = ['en', 'pl']
 
 limiter = Limiter(
-    get_remote_address,
+    key_func=get_remote_address,
     app=app,
-    default_limits=["1000 per day", "500 per hour", "30 per minute"]
+    default_limits=["1000 per day", "500 per hour", "30 per minute"],
+    headers_enabled=True
 )
 
 babel = Babel(app)
