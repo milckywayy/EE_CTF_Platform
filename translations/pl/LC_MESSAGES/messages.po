@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-07-13 00:19+0200\n"
+"POT-Creation-Date: 2024-07-20 16:48+0200\n"
 "PO-Revision-Date: 2024-06-27 17:21+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pl\n"
@@ -19,29 +19,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.15.0\n"
 
-#: app.py:72
+#: app.py:81
 msgid "Please log in to access this page."
 msgstr "Zaloguj się, aby uzyskać dostęp do tej strony."
 
-#: app.py:143
+#: app.py:152
 msgid "Error during USOS authentication. Please try again."
 msgstr "Błąd podczas uwierzytelniania USOS. Spróbuj ponownie."
 
-#: app.py:158
+#: app.py:167
 msgid "You have been logged out."
 msgstr "Zostałeś wylogowany."
 
-#: app.py:169
+#: app.py:178
 msgid "Challenge not available yet."
 msgstr "Wyzwanie nie jest jeszcze dostępne."
 
-#: app.py:235
+#: app.py:248
 msgid "Correct flag! Well done!"
 msgstr "Prawidłowa flaga! Dobra robota!"
 
-#: app.py:237
+#: app.py:250
 msgid "Incorrect flag. Try again!"
-msgstr "Nieprawidłowa flaga. Spróbu jeszcze raz!"
+msgstr "Nieprawidłowa flaga. Spróbuj jeszcze raz!"
 
 #: templates/base.html:6
 msgid "EE CTF"
@@ -71,7 +71,7 @@ msgstr "2024 WRS EE"
 msgid "Challenge - EE CTF"
 msgstr "Strona główna - EE CTF"
 
-#: templates/challenge.html:15 templates/index.html:26 templates/index.html:28
+#: templates/challenge.html:15
 msgid "Challenge"
 msgstr "Wyzwanie"
 
@@ -138,7 +138,7 @@ msgid "Home - EE CTF"
 msgstr "Strona główna - EE CTF"
 
 #: templates/index.html:7
-msgid "Welcome to the Electrical CTF Platform!"
+msgid "Welcome to the Electric CTF Platform!"
 msgstr "Witamy na platformie Elektryczny CTF!"
 
 #: templates/index.html:8
