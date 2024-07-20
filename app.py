@@ -10,7 +10,6 @@ import requests
 from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify, send_from_directory
 from flask_babel import Babel, gettext as _
 from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
 
 from usosapi.usosapi import USOSAPISession, USOSAPIAuthorizationError
 from model import db, User, Challenge, Solve, Rating, Comment
@@ -25,8 +24,15 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['BABEL_DEFAULT_LOCALE'] = 'pl'
 app.config['BABEL_SUPPORTED_LOCALES'] = ['en', 'pl']
 
+
+def get_ip_address():
+    if request.headers.get('X-Forwarded-For'):
+        return request.headers.get('X-Forwarded-For').split(',')[0]
+    return request.remote_addr
+
+
 limiter = Limiter(
-    key_func=get_remote_address,
+    get_ip_address,
     app=app,
     default_limits=["1000 per day", "500 per hour", "30 per minute"],
     headers_enabled=True
