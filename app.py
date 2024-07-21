@@ -67,7 +67,12 @@ ADMIN_IDS = ['1178835', '1187538']
 
 @babel.localeselector
 def get_locale():
-    return session.get('lang', app.config['BABEL_DEFAULT_LOCALE'])
+    locale = session.get('lang', app.config['BABEL_DEFAULT_LOCALE'])
+
+    if locale not in app.config['BABEL_SUPPORTED_LOCALES']:
+        return app.config['BABEL_DEFAULT_LOCALE']
+
+    return locale
 
 
 @app.context_processor
@@ -93,8 +98,17 @@ def login_required(f):
 
 @app.route('/change_language/<language>')
 def change_language(language):
-    session['lang'] = language
-    return redirect(request.referrer)
+    if language in app.config['BABEL_SUPPORTED_LOCALES']:
+        session['lang'] = language
+    else:
+        session['lang'] = app.config['BABEL_DEFAULT_LOCALE']
+        flash(_("Language not supported."), "danger")
+
+    referrer = request.referrer
+    if referrer and referrer != request.url:
+        return redirect(referrer)
+    else:
+        return redirect(url_for('home'))
 
 
 @app.route('/')
