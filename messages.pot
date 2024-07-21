@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-07-20 16:48+0200\n"
+"POT-Creation-Date: 2024-07-21 03:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,27 +17,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.15.0\n"
 
-#: app.py:81
+#: app.py:93
 msgid "Please log in to access this page."
 msgstr ""
 
-#: app.py:152
+#: app.py:105
+msgid "Language not supported."
+msgstr ""
+
+#: app.py:173
 msgid "Error during USOS authentication. Please try again."
 msgstr ""
 
-#: app.py:167
+#: app.py:188
 msgid "You have been logged out."
 msgstr ""
 
-#: app.py:178
+#: app.py:199
 msgid "Challenge not available yet."
 msgstr ""
 
-#: app.py:248
+#: app.py:269
 msgid "Correct flag! Well done!"
 msgstr ""
 
-#: app.py:250
+#: app.py:271
 msgid "Incorrect flag. Try again!"
 msgstr ""
 
@@ -134,7 +138,7 @@ msgid "Home - EE CTF"
 msgstr ""
 
 #: templates/index.html:7
-msgid "Welcome to the Electrical CTF Platform!"
+msgid "Welcome to the Electric CTF Platform!"
 msgstr ""
 
 #: templates/index.html:8
