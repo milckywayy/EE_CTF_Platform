@@ -124,7 +124,7 @@
         }
 
         async function containerStatus() {
-            const result = await fetchWithLoading(`/container_manager/container_status`);
+            const result = await fetchWithLoading(`/container_manager/container_status/{{ image }}`);
             if (result) {
                 updateUI(result);
             }

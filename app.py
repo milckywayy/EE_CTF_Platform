@@ -336,12 +336,12 @@ def get_headers():
     }
 
 
-@app.route('/container_manager/container_status')
+@app.route('/container_manager/container_status/<image>')
 @login_required
-def container_status():
+def container_status(image):
     session_id = session['user']['id']
     response = requests.post(
-        f'{CONTAINER_MANAGER_API}/container_status',
+        f'{CONTAINER_MANAGER_API}/container_status/{image}',
         json={'session_id': session_id},
         headers=get_headers()
     )
