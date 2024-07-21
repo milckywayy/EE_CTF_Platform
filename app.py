@@ -166,6 +166,7 @@ def login():
                 'photo_url': user_data['photo_urls']['200x200'],
                 'is_admin': True if user_data['id'] in ADMIN_IDS else False
             }
+            logging.info(f"User {user_data['id']} logged in")
 
             return redirect(url_for('home'))
 
