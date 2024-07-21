@@ -311,12 +311,12 @@ msgstr "Nazwisko"
 msgid "Email"
 msgstr "Email"
 
-#~ msgid "Easy"
-#~ msgstr "Łatwe"
+msgid "Easy"
+msgstr "Łatwe"
 
-#~ msgid "Medium"
-#~ msgstr "Średnie"
+msgid "Medium"
+msgstr "Średnie"
 
-#~ msgid "Hard"
-#~ msgstr "Trudne"
+msgid "Hard"
+msgstr "Trudne"
 
