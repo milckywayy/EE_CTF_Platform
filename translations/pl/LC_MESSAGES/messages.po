@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-07-21 03:25+0200\n"
+"POT-Creation-Date: 2024-07-23 01:09+0200\n"
 "PO-Revision-Date: 2024-06-27 17:21+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.13.1\n"
 
 #: app.py:93
 msgid "Please log in to access this page."
@@ -27,23 +27,23 @@ msgstr "Zaloguj się, aby uzyskać dostęp do tej strony."
 msgid "Language not supported."
 msgstr "Ten język nie jest wspierany."
 
-#: app.py:173
+#: app.py:184
 msgid "Error during USOS authentication. Please try again."
 msgstr "Błąd podczas uwierzytelniania USOS. Spróbuj ponownie."
 
-#: app.py:188
+#: app.py:199
 msgid "You have been logged out."
 msgstr "Zostałeś wylogowany."
 
-#: app.py:199
+#: app.py:210
 msgid "Challenge not available yet."
 msgstr "Wyzwanie nie jest jeszcze dostępne."
 
-#: app.py:269
+#: app.py:285
 msgid "Correct flag! Well done!"
 msgstr "Prawidłowa flaga! Dobra robota!"
 
-#: app.py:271
+#: app.py:287
 msgid "Incorrect flag. Try again!"
 msgstr "Nieprawidłowa flaga. Spróbuj jeszcze raz!"
 
@@ -79,43 +79,47 @@ msgstr "Strona główna - EE CTF"
 msgid "Challenge"
 msgstr "Wyzwanie"
 
-#: templates/challenge.html:20
+#: templates/challenge.html:22
+msgid "Challenge solved! Congratulations!"
+msgstr "Wyzwanie rozwiązane! Gratulacje!"
+
+#: templates/challenge.html:24
 msgid "EE_CTF{your_flag_here}"
 msgstr "EE_CTF{twoja_flaga}"
 
-#: templates/challenge.html:22
+#: templates/challenge.html:26
 msgid "Submit Flag"
 msgstr "Wyślij flagę"
 
-#: templates/challenge.html:34
+#: templates/challenge.html:39
 msgid "Top 5 Solvers"
 msgstr "Top 5 wyników"
 
-#: templates/challenge.html:47
+#: templates/challenge.html:52
 msgid "Not solved yet!"
 msgstr "Nie rozwiązane!"
 
-#: templates/challenge.html:55
+#: templates/challenge.html:60
 msgid "Rate this Challenge"
 msgstr "Oceń wyzwanie"
 
-#: templates/challenge.html:74
+#: templates/challenge.html:79
 msgid "Share your thoughts about challenge"
 msgstr "Podziel się opinią o wyzwaniu"
 
-#: templates/challenge.html:80
+#: templates/challenge.html:85
 msgid "Submit Comment"
 msgstr "Zapisz komentarz"
 
-#: templates/challenge.html:85
+#: templates/challenge.html:90
 msgid "Edit Comment"
 msgstr "Edytuj komentarz"
 
-#: templates/challenge.html:86
+#: templates/challenge.html:91
 msgid "Save Comment"
 msgstr "Zapisz komentarz"
 
-#: templates/challenge.html:87
+#: templates/challenge.html:92
 msgid "Cancel"
 msgstr "Anuluj"
 
@@ -163,7 +167,7 @@ msgstr "Zaloguj się, aby uzyskać dostęp do naszych wyzwań."
 msgid "Available Challenges"
 msgstr "Dostępne wyzwania"
 
-#: templates/index.html:31
+#: templates/index.html:35
 msgid "Available from"
 msgstr "Dostępne od"
 
