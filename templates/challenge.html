@@ -15,12 +15,17 @@
                     <h4>{{ _('Challenge') }}</h4>
                     <p class="lead">{{ ch_desc | safe }}</p>
                     <hr class="my-2">
+
                     <form action="{{ url_for('submit_flag', challenge_id=ch_id) }}" method="POST" class="mt-4">
                         <div class="input-group">
-                            <input type="text" id="flagInput" name="flag" class="form-control" placeholder="{{ _('EE_CTF{your_flag_here}') }}" required>
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-primary">{{ _('Submit Flag') }}</button>
-                            </div>
+                            {% if ch_solved %}
+                                <input type="text" id="flagInput" name="flag" class="form-control" disabled="disabled" placeholder="{{ _('Challenge solved! Congratulations!') }}" required>
+                            {% else %}
+                                <input type="text" id="flagInput" name="flag" class="form-control" placeholder="{{ _('EE_CTF{your_flag_here}') }}" required>
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary">{{ _('Submit Flag') }}</button>
+                                </div>
+                            {% endif %}
                         </div>
                     </form>
                 </div>

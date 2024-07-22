@@ -113,7 +113,17 @@ def change_language(language):
 
 @app.route('/')
 def home():
+    user_id = session['user']['id'] if 'user' in session else None
     challenges = Challenge.query.filter_by(edition_number=1).order_by(Challenge.number).all()
+
+    solved_challenges_ids = []
+    if user_id is not None:
+        solved_challenges = db.session.query(Solve.challenge_id).filter_by(user_id=user_id).all()
+        solved_challenges_ids = [solve.challenge_id for solve in solved_challenges]
+
+    for chg in challenges:
+        chg.solved = chg.id in solved_challenges_ids
+
     return render_template('index.html', challenges=challenges, is_admin=is_admin())
 
 
@@ -205,6 +215,10 @@ def challenge(edition_number, challenge_number):
     ch_name = challenge.name_pl if lang == 'pl' else challenge.name
     ch_desc = challenge.description_pl if lang == 'pl' else challenge.description
 
+    user_id = session['user']['id']
+    solve = Solve.query.filter_by(user_id=user_id, challenge_id=ch_id).first()
+    ch_solved = solve is not None
+
     top_solves = (db.session.query(
         User.first_name,
         User.last_name,
@@ -232,10 +246,10 @@ def challenge(edition_number, challenge_number):
         for user_name, user_last_name, solve_time in top_solves
     ]
 
-    user_rating = Rating.query.filter_by(user_id=session['user']['id'], challenge_id=ch_id).first()
+    user_rating = Rating.query.filter_by(user_id=user_id, challenge_id=ch_id).first()
     rating = user_rating.rating if user_rating else 0
 
-    user_comment = Comment.query.filter_by(user_id=session['user']['id'], challenge_id=ch_id).first()
+    user_comment = Comment.query.filter_by(user_id=user_id, challenge_id=ch_id).first()
     comment = user_comment.comment if user_comment else None
 
     return render_template(
@@ -245,7 +259,8 @@ def challenge(edition_number, challenge_number):
         ch_desc=ch_desc,
         user_rating=rating,
         user_comment=comment,
-        top_solvers=top_solvers
+        top_solvers=top_solvers,
+        ch_solved=ch_solved
     )
 
 

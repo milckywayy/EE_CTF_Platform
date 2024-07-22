@@ -20,7 +20,11 @@
         <ul class="challenge-list list-group">
             {% for challenge in challenges %}
                 <li class="list-group-item d-flex justify-content-between align-items-center {{ 'available-challenge' if challenge.is_available() or is_admin else 'unavailable-challenge' }}">
-                    <i class="{{ challenge.icon }}"></i>
+                    {% if challenge.solved %}
+                        <i class="icon-challenge-solved fas fa-check"></i>
+                    {% else %}
+                        <i class="{{ challenge.icon }}"></i>
+                    {% endif %}
                     {% if challenge.is_available() or is_admin %}
                         {% if get_locale() == 'pl' %}
                             <a href="{{ url_for('challenge', edition_number=challenge.edition_number, challenge_number=challenge.number) }}" class="challenge-link">{{ challenge.name_pl }}</a>
