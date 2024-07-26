@@ -16,7 +16,7 @@ from model import db, User, Challenge, Solve, Rating, Comment
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('EE-CTF_SECRET_KEY', os.urandom(24))
+app.secret_key = os.environ.get('EE_CTF_SECRET_KEY', os.urandom(24))
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
