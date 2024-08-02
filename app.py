@@ -399,6 +399,7 @@ def restart_container():
 
 @app.route('/download/<filename>')
 def download_file(filename):
+    logging.info(f"User {session['user']['id']} downloaded file {filename}")
     return send_from_directory('static/ctf_files', filename)
 
 
