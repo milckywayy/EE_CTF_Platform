@@ -42,9 +42,7 @@
             border: 1px solid #dee2e6;
             border-radius: 5px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
+            flex-direction: column;
         }
         .border {
             border: 1px solid #dee2e6 !important;
@@ -58,6 +56,16 @@
         .btn-loading {
             pointer-events: none;
             opacity: 0.6;
+        }
+        .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent;
+            padding: .25rem .35rem;
+        }
+        #access_command_list {
+            flex-grow: 1;
         }
     </style>
 </head>
@@ -79,8 +87,7 @@
         </div>
 
         <div class="access_command p-2 bg-transparent border rounded">
-            <span id="access_command_text"></span>
-            <button id="copy-button" class="btn btn-sm btn-light" onclick="copyAccessCommand()"><i class="far fa-copy"></i></button>
+            <ul id="access_command_list" class="list-group flex-grow-1"></ul>
         </div>
     </div>
 
@@ -151,7 +158,8 @@
         }
 
         function updateUI(result) {
-            const { status, port, password, expiration_time, access_command } = result;
+            const { status, port, password, expiration_time, access_commands } = result;
+            console.log(access_commands)
 
             expirationTimestamp = new Date(expiration_time).getTime();
 
@@ -160,7 +168,7 @@
                     setStatus('running', 'Running');
                     toggleButtons('running');
                     displayContainerInfo(port, password);
-                    displaySshCommand(access_command);
+                    displaySshCommand(access_commands);
                     startCountdown();
                     break;
                 case 'not_created':
@@ -214,31 +222,41 @@
         }
 
         function displayContainerInfo(port, password) {
-            document.getElementById('containerInfo').innerHTML = `Port: <span class="badge badge-primary badge-pill">${port}</span>  Password: <span class="badge badge-primary badge-pill">${password}</span>  Expires in: <span class="badge badge-primary badge-pill" id="countdown"></span>`;
+            document.getElementById('containerInfo').innerHTML = `Ports: <span class="badge badge-primary badge-pill">${port}</span>  Password: <span class="badge badge-primary badge-pill">${password}</span>  Expires in: <span class="badge badge-primary badge-pill" id="countdown"></span>`;
         }
 
         function hideContainerInfo() {
             document.getElementById('containerInfo').innerText = '';
         }
 
-        function displaySshCommand(access_command) {
-            const copyButton = document.getElementById('copy-button');
-            copyButton.style.display = 'block';
+        function displaySshCommand(access_commands) {
+            const accessCommandList = document.getElementById('access_command_list');
+            accessCommandList.innerHTML = '';
 
-            access_command = access_command.replace("<server_domain>", "{{ manager_domain }}")
-            document.getElementById('access_command_text').innerText = access_command;
+            access_commands.forEach((command, index) => {
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item';
+                listItem.innerText = command.replace("<server_domain>", "{{ manager_domain }}");
+
+                const copyButton = document.createElement('button');
+                copyButton.className = 'btn btn-sm btn-light ml-2';
+                copyButton.innerHTML = '<i class="far fa-copy"></i>';
+                copyButton.onclick = () => copyAccessCommand(index);
+
+                listItem.appendChild(copyButton);
+                accessCommandList.appendChild(listItem);
+            });
         }
 
         function hideSshCommand() {
-            const copyButton = document.getElementById('copy-button');
-            copyButton.style.display = 'none';
-
-            document.getElementById('access_command_text').innerText = "Don't be shy and try out our containers!";
+            document.getElementById('access_command_list').innerHTML = "Don't be shy and try out our containers!";
         }
 
-        function copyAccessCommand() {
-            const sshTextElement = document.getElementById('access_command_text').innerText;
-            navigator.clipboard.writeText(sshTextElement).then(() => {
+        function copyAccessCommand(index) {
+            const accessCommandListItems = document.querySelectorAll('#access_command_list li');
+            const commandText = accessCommandListItems[index].innerText.replace("\n", "");
+
+            navigator.clipboard.writeText(commandText).then(() => {
                 alert('Copied to the clipboard.');
             }, (err) => {
                 alert('Error: ' + err);
