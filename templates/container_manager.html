@@ -138,7 +138,11 @@
         }
 
         async function makeContainer() {
-            await fetchWithLoading(`/container_manager/make_container/{{ image }}`);
+            {% if challenge_id != None %}
+                await fetchWithLoading(`/container_manager/make_container/{{ image }}/{{ challenge_id }}`);
+            {% else %}
+                await fetchWithLoading(`/container_manager/make_container/{{ image }}`);
+            {% endif %}
             await containerStatus();
         }
 

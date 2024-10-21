@@ -5,6 +5,7 @@ import threading
 import time
 from datetime import datetime
 from functools import wraps
+import hashlib
 
 import requests
 from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify, send_from_directory
@@ -46,6 +47,11 @@ with open('credentials/container_manager_secret.json') as f:
 CONTAINER_MANAGER_API = 'http://127.0.0.1:5000'
 CONTAINER_MANAGER_DOMAIN = 'localhost'
 USOSAPI_SESSION_CHECK = 43_200  # Every 12 hours
+
+CURRENT_EDITION_NUM = 2
+FLAG_NOISE_LENGTH = 12
+FLAG_NOISE_TAG = '<noise>'
+FLAG_DEFAULT_TEMPLATE = 'EE_CTF{<noise>}'
 
 ADMIN_IDS = ['1178835', '1187538']
 
@@ -99,7 +105,7 @@ def change_language(language):
 @app.route('/')
 def home():
     user_id = session['user']['id'] if 'user' in session else None
-    challenges = Challenge.query.filter_by(edition_number=1).order_by(Challenge.number).all()
+    challenges = Challenge.query.filter_by(edition_number=CURRENT_EDITION_NUM).order_by(Challenge.number).all()
 
     solved_challenges_ids = []
     if user_id is not None:
@@ -252,10 +258,10 @@ def challenge(edition_number, challenge_number):
 @app.route('/submit_flag/<challenge_id>', methods=['POST'])
 @login_required
 def submit_flag(challenge_id):
-    challenge = Challenge.query.filter_by(id=challenge_id).first_or_404()
+    flag = generate_flag(challenge_id)
 
     user_flag = request.form.get('flag')
-    if user_flag == challenge.flag:
+    if user_flag == flag:
         is_already_solved = Solve.query.filter_by(user_id=session['user']['id'], challenge_id=challenge_id).first()
         if is_already_solved is None:
             solve = Solve(
@@ -326,10 +332,16 @@ def submit_comment(challenge_id):
     return redirect(request.referrer)
 
 
-@app.route('/container_manager/manager/<image>')
+@app.route('/container_manager/manager/<image>/<challenge_id>')
+@app.route('/container_manager/manager/<image>', defaults={'challenge_id': None})
 @login_required
-def container_manager(image):
-    return render_template('container_manager.html', image=image, manager_domain=CONTAINER_MANAGER_DOMAIN)
+def container_manager(image, challenge_id):
+    return render_template(
+        'container_manager.html',
+        image=image,
+        manager_domain=CONTAINER_MANAGER_DOMAIN,
+        challenge_id=challenge_id
+    )
 
 
 def get_headers():
@@ -337,6 +349,17 @@ def get_headers():
         'X-Secret-Key': SECRET_KEY,
         'Content-Type': 'application/json'
     }
+
+
+def generate_flag(challenge_id):
+    flag_template = FLAG_DEFAULT_TEMPLATE
+    if challenge_id is not None:
+        flag_template = Challenge.query.filter_by(id=challenge_id).first_or_404().flag
+
+    text_to_encode = f"secret_{session['user']['id']}_{flag_template}"
+    noise = hashlib.sha256(text_to_encode.encode()).hexdigest()[:FLAG_NOISE_LENGTH]
+
+    return flag_template.replace(FLAG_NOISE_TAG, noise)
 
 
 @app.route('/container_manager/container_status/<image>')
@@ -351,13 +374,20 @@ def container_status(image):
     return jsonify(response.json())
 
 
-@app.route('/container_manager/make_container/<image>')
+@app.route('/container_manager/make_container/<image>/<challenge_id>')
+@app.route('/container_manager/make_container/<image>', defaults={'challenge_id': None})
 @login_required
-def make_container(image):
+def make_container(image, challenge_id):
     session_id = session['user']['id']
+
+    flag = generate_flag(challenge_id)
+
     response = requests.post(
         f'{CONTAINER_MANAGER_API}/make_container/{image}',
-        json={'session_id': session_id},
+        json={
+            'session_id': session_id,
+            'flag': flag
+        },
         headers=get_headers()
     )
     return jsonify(response.json())
