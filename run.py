@@ -4,7 +4,7 @@ from app import app
 serve(
     app,
     host='localhost',
-    port=5000,
+    port=8080,
     threads=8,
     backlog=2048,
     channel_timeout=120,

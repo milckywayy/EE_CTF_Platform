@@ -43,8 +43,8 @@ with open('credentials/container_manager_secret.json') as f:
     secret_data = json.load(f)
     SECRET_KEY = secret_data['secret']
 
-CONTAINER_MANAGER_API = 'https://container-manager.francecentral.cloudapp.azure.com:443'
-CONTAINER_MANAGER_DOMAIN = 'container-manager.francecentral.cloudapp.azure.com'
+CONTAINER_MANAGER_API = 'http://127.0.0.1:5000'
+CONTAINER_MANAGER_DOMAIN = 'localhost'
 USOSAPI_SESSION_CHECK = 43_200  # Every 12 hours
 
 ADMIN_IDS = ['1178835', '1187538']
@@ -267,8 +267,10 @@ def submit_flag(challenge_id):
             db.session.commit()
             logging.info(f"User {session['user']['id']} solved challenge {challenge_id}")
 
+        logging.info(f"User {session['user']['id']} submitted correct flag \"{user_flag}\" for challenge {challenge_id}")
         flash(_("Correct flag! Well done!"), "success")
     else:
+        logging.info(f"User {session['user']['id']} submitted incorrect flag \"{user_flag}\" for challenge {challenge_id}")
         flash(_("Incorrect flag. Try again!"), "danger")
     return redirect(request.referrer)
 
