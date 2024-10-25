@@ -48,10 +48,11 @@ CONTAINER_MANAGER_API = 'http://127.0.0.1:5000'
 CONTAINER_MANAGER_DOMAIN = 'localhost'
 USOSAPI_SESSION_CHECK = 43_200  # Every 12 hours
 
-CURRENT_EDITION_NUM = 2
+CURRENT_EDITION_NUM = 1
 FLAG_NOISE_LENGTH = 12
 FLAG_NOISE_TAG = '<noise>'
 FLAG_DEFAULT_TEMPLATE = 'EE_CTF{<noise>}'
+FLAG_SECRET = os.environ.get('EE_CTF_FLAG_SECRET', os.urandom(24))
 
 ADMIN_IDS = ['1178835', '1187538']
 
@@ -356,7 +357,7 @@ def generate_flag(challenge_id):
     if challenge_id is not None:
         flag_template = Challenge.query.filter_by(id=challenge_id).first_or_404().flag
 
-    text_to_encode = f"secret_{session['user']['id']}_{flag_template}"
+    text_to_encode = f"{FLAG_SECRET}_{session['user']['id']}_{flag_template}"
     noise = hashlib.sha256(text_to_encode.encode()).hexdigest()[:FLAG_NOISE_LENGTH]
 
     return flag_template.replace(FLAG_NOISE_TAG, noise)
